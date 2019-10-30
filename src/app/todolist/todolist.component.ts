@@ -10,7 +10,11 @@ import {TodoService} from '../todo.service';
 })
 export class TodolistComponent implements OnInit {
 
-  todos : Todo[];
+  todos : Todo[] =[
+    {"userId":1, "listId":38, "description":"Drink one cup of water", "isDone":false},
+    {"userId":3, "listId":38,"description":"Drink one cup of Coffee", "isDone":false},
+    {"userId":2, "listId":38,"description":"Eat a banana", "isDone":false}
+  ];
 
 /*
   Upon instantiation Angular will use its DI system to set todoService to a singleton instance of TodoService.
@@ -19,13 +23,15 @@ export class TodolistComponent implements OnInit {
 
   ngOnInit() {
     console.log(this.todoService);
-    //this.getTodos();
+    this.getTodos();
   }
 
   getTodos() : void {
     //Revist the => function
     //This statement will wait for Observable to emit an array of todos.
     this.todoService.getTodos().subscribe(todos => this.todos = todos);
+    this.todoService.getFixedTodos(todos);
+    console.log(todos);
   }
 
 }

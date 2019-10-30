@@ -13,6 +13,7 @@
   </form>
   <app-todo *ngFor="let todo of todos" [todo]="todo"> </app-todo>
 -->
+
 <mat-card>
   <mat-card-header>
     <div>
@@ -21,4 +22,5 @@
       </mat-form-field>
     </div>
   </mat-card-header>
+  <app-todo *ngFor="let todo of todos" [todo]="todo"> </app-todo>
 </mat-card>

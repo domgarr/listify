@@ -1,0 +1,14 @@
+<!--
+<div class="custom-control custom-checkbox my-1 mr-sm-2" >
+    <input type="checkbox" class="custom-control-input" id="customControlInline" [checked]=todo.isDone>
+    <label class="custom-control-label" for="customControlInline">{{todo.description}}</label>
+    <button type="button" class="btn btn-danger">Danger</button>
+</div>
+-->
+<mat-card-header>
+  <div>
+    <mat-form-field>
+      <input matInput placeholder="Add a task..." [value]=todo.description>  
+    </mat-form-field>
+  </div>
+</mat-card-header>
