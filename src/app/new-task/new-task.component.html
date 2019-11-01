@@ -1,0 +1,8 @@
+<mat-card-header>
+  <div>
+    <mat-form-field>
+      <!-- () denotes event-binding.  a template statement responds to an event - it has a side effect -->
+      <input matInput #inputTask (keyup.enter) = "onEnterPressed(inputTask.value)" (keyup)="onKey(inputTask.value)"  placeholder="Add a task..." [value]="description" name="please work" >
+    </mat-form-field>
+  </div>
+</mat-card-header>

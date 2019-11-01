@@ -3,4 +3,8 @@ export class Todo {
   listId: number;
   description: string;
   isDone :boolean;
+
+  constructor() {
+        this.description = "";
+    }
 }

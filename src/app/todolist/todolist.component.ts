@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Input } from '@angular/core';
 import {Todo} from '../models/todo';
 
 import {TodoService} from '../todo.service';
@@ -22,16 +22,15 @@ export class TodolistComponent implements OnInit {
   constructor(private todoService: TodoService) { }
 
   ngOnInit() {
-    console.log(this.todoService);
     this.getTodos();
   }
 
   getTodos() : void {
     //Revist the => function
     //This statement will wait for Observable to emit an array of todos.
-    this.todoService.getTodos().subscribe(todos => this.todos = todos);
-    this.todoService.getFixedTodos(todos);
-    console.log(todos);
+    //this.todoService.getTodos().subscribe(todos => this.todos = todos);
+    console.log(this.todos);
   }
+
 
 }
