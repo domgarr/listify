@@ -16,6 +16,8 @@ export class TodolistComponent implements OnInit {
     {"userId":2, "listId":38,"description":"Eat a banana", "isDone":false}
   ];
 
+  @ViewChild('')
+
 /*
   Upon instantiation Angular will use its DI system to set todoService to a singleton instance of TodoService.
 */

@@ -5,11 +5,13 @@
     <button type="button" class="btn btn-danger">Danger</button>
 </div>
 -->
-<mat-card-header>
-  <div>
-    <mat-form-field>
+<mat-card class = "mb-3 mt-3" (focusout)="offFocus()" >
+  <mat-card-content>
+    <p *ngIf="!focus" > {{description}} <i class = "material-icons" (click)="onEdit()">edit</i>  </p>
+
+    <mat-form-field *ngIf="focus">
       <!-- () denotes event-binding.  a template statement responds to an event - it has a side effect -->
-      <input #inputTask (keyup.enter) = "onEnterPressed(inputTask.value)" matInput placeholder="Add a task..." [value]="description" [name]=[todo.userId]>
+      <input matInput #inputTask placeholder="Add a task..." (keyup.enter) = "onEnterPressed(inputTask.value)"   [value]="description" [name]=[todo.userId] >
     </mat-form-field>
-  </div>
-</mat-card-header>
+  </mat-card-content>
+</mat-card>

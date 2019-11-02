@@ -14,8 +14,6 @@ import {MatGridListModule} from '@angular/material/grid-list';
 import { NewTaskComponent } from './new-task/new-task.component';
 
 
-
-
 @NgModule({
   declarations: [
     AppComponent,
