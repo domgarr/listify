@@ -23,5 +23,5 @@
     </div>
   </mat-card-header>
   <app-todo *ngFor="let todo of todos" [todo]="todo"> </app-todo>
-  <app-new-task> </app-new-task>
+  <app-new-task (newTaskAdded) = onNewTaskAdded($event)> </app-new-task>
 </mat-card>

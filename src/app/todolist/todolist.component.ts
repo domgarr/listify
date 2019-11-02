@@ -32,5 +32,9 @@ export class TodolistComponent implements OnInit {
     console.log(this.todos);
   }
 
+  onNewTaskAdded(todo : Todo){
+    console.log(todo);
+    this.todos.push(todo);
+  }
 
 }
