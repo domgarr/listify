@@ -1,0 +1,11 @@
+<mat-card>
+  <mat-card-header>
+    <div>
+      <mat-form-field>
+        <input matInput placeholder="Add a task...">
+      </mat-form-field>
+    </div>
+  </mat-card-header>
+  <app-task *ngFor="let task of tasks" [task]="task" (editedTask) = onEditedTask($event)> </app-task>
+  <app-new-task (newTaskAdded) = onNewTaskAdded($event)> </app-new-task>
+</mat-card>

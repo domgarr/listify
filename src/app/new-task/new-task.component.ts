@@ -1,8 +1,7 @@
-import { Component, OnInit, Input,Output, ViewChild, EventEmitter, NgModule} from '@angular/core';
+import { Component, OnInit, Input,Output, ViewChild, EventEmitter, NgModule, ElementRef} from '@angular/core';
 import { FormsModule } from '@angular/forms';
 
-
-import {Todo} from '../models/todo';
+import {Task} from '../models/task';
 
 @Component({
   selector: 'app-new-task',
@@ -12,9 +11,10 @@ import {Todo} from '../models/todo';
 
 export class NewTaskComponent implements OnInit {
   description : string;
-  @ViewChild('inputTask') inputTask;
+  //static:false : set it to True to resolve query results before change detection runs
+  @ViewChild('inputTask', {static:false}) inputTask : ElementRef;
 
-  @Output() newTaskAdded = new EventEmitter<Todo>();
+  @Output() newTaskAdded = new EventEmitter<Task>();
 
   constructor() {
   }
@@ -40,13 +40,13 @@ export class NewTaskComponent implements OnInit {
     console.log(value);
     //TODO: Rename Todo to Task
     //Create new task
-    let todo = new Todo();
-    todo.userId = 1;
-    todo.description = value;
+    let task = new Task();
+    task.userId = 1;
+    task.description = value;
     //Make call to DB to add new task.
 
     //Add returned object to the existing array.
-    this.newTaskAdded.emit(todo);
+    this.newTaskAdded.emit(task);
     //Set textbox to empty
     this.description = "";
     console.log(this);

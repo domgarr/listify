@@ -11,8 +11,8 @@ import {HttpClient, HttpHeaders} from '@angular/common/http';
 
   In this case, This service will instantiate TodoService and provde the service.
 */
-import {Todo} from './models/todo';
-import {TODOS} from './models/mock-todos';
+import {Task} from './models/task';
+import {TASKS} from './models/mock-tasks';
 
 /*
   When providing at the root level. Angular creates a single, shared instance of TodoService
@@ -24,15 +24,15 @@ import {TODOS} from './models/mock-todos';
 @Injectable({
   providedIn: 'root'
 })
-export class TodoService {
+export class TaskService {
   private todosUrl = 'http://localhost:8080/todos/38'
 
   constructor(private http : HttpClient) { }
 
   //Now that getTodos return an observable the difference is adding subscribe.
-  getTodos(): Observable<Todo[]> {
+  getTodos(): Observable<Task[]> {
     //of(TODOS) will return a single value - array of todos
-    return this.http.get<Todo[]>(this.todosUrl);
+    return this.http.get<Task[]>(this.todosUrl);
   }
 
   setTodoDone() : void {
