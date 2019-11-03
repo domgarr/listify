@@ -12,12 +12,16 @@ export class TaskComponent implements OnInit {
   @Output() editedTask = new EventEmitter<Task>(); //An event consumed by tasklist componenet.
   @Output() deleteTask = new EventEmitter<Task>(); //An event consumed by tasklist componenet.
 
+  defaultCardTaskClasses : string = "mb-3 mt-3";
+  cardTaskClasses : string;
+
   renderInputTask : boolean; //Used for controlling the rendering of task or editTask. When false, the edit option is not rendered.
 
   @ViewChild('inputTask', {static:false}) inputTask: ElementRef; //Looks for the element containing #inputTask and gets a reference to it.
 
   constructor(private changeDetector : ChangeDetectorRef) {
     this.renderInputTask = false;
+    this.cardTaskClasses = this.defaultCardTaskClasses;
   }
 
   ngOnInit(){
@@ -35,13 +39,12 @@ export class TaskComponent implements OnInit {
 
   onDeletePressed(){
     this.deleteTask.emit(this.task);
-    //this.focusOffInput();
-    console.log("fjdkla");
   }
 
   //Called when the edit icon is clicked next to a task.
   onEdit(){
     this.focusOnInput();
+    this.cardTaskClasses = this.defaultCardTaskClasses;
 
     /*
      After focusOnInput() is called, the input is rendered. Prior to this the input is undefined.
@@ -65,5 +68,17 @@ export class TaskComponent implements OnInit {
   focusOffInput(){
   //Disable rendering of input.
    this.renderInputTask = false;
+  }
+
+  onDone(ref){
+    this.task.isDone = !this.task.isDone;
+
+    if(this.task.isDone){
+      this.cardTaskClasses = this.cardTaskClasses.concat(" green");
+    }else{
+      this.cardTaskClasses = this.defaultCardTaskClasses;
+    }
+    console.log(this.cardTaskClasses);
+    console.log("done");
   }
 }

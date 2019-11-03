@@ -1,13 +1,6 @@
-<!--
-<div class="custom-control custom-checkbox my-1 mr-sm-2" >
-    <input type="checkbox" class="custom-control-input" id="customControlInline" [checked]=todo.isDone>
-    <label class="custom-control-label" for="customControlInline">{{todo.description}}</label>
-    <button type="button" class="btn btn-danger">Danger</button>
-</div>
--->
-<mat-card class = "mb-3 mt-3"  >
+<mat-card #cardTask [ngClass] = "cardTaskClasses"   >
   <mat-card-content>
-    <p *ngIf="!renderInputTask" > {{task.description}} <i class = "material-icons float-right" (click)="onDeletePressed()">delete</i>  <i class = "material-icons float-right" (click)="onEdit()">edit</i>  </p>
+    <p class="pt-1 pb-1" *ngIf="!renderInputTask" (click)="onDone(cardTask)" > {{task.description}} <i class = "material-icons float-right" (click)="onDeletePressed()">delete</i>  <i class = "material-icons float-right" (click)="onEdit()">edit</i>  </p>
 
     <mat-form-field *ngIf="renderInputTask">
       <!-- () denotes event-binding.  a template statement responds to an event - it has a side effect -->
