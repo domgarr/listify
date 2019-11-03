@@ -44,4 +44,13 @@ export class TaskListComponent implements OnInit {
     console.log(this.tasks);
   }
 
+  onDeleteTask(taskToDelete : Task){
+    console.log(taskToDelete);
+    let existingtask = this.tasks.find(task => task.userId === taskToDelete.userId );
+    let index = this.tasks.indexOf(existingtask);
+    console.log(index);
+    this.tasks.splice(index, 1);
+    console.log(this.tasks);
+  }
+
 }

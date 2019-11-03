@@ -6,6 +6,6 @@
       </mat-form-field>
     </div>
   </mat-card-header>
-  <app-task *ngFor="let task of tasks" [task]="task" (editedTask) = onEditedTask($event)> </app-task>
+  <app-task *ngFor="let task of tasks" [task]="task" (editedTask) = onEditedTask($event) (deleteTask) = onDeleteTask($event)> </app-task>
   <app-new-task (newTaskAdded) = onNewTaskAdded($event)> </app-new-task>
 </mat-card>

@@ -10,6 +10,7 @@ export class TaskComponent implements OnInit {
 
   @Input() task : Task;
   @Output() editedTask = new EventEmitter<Task>(); //An event consumed by tasklist componenet.
+  @Output() deleteTask = new EventEmitter<Task>(); //An event consumed by tasklist componenet.
 
   renderInputTask : boolean; //Used for controlling the rendering of task or editTask. When false, the edit option is not rendered.
 
@@ -30,6 +31,12 @@ export class TaskComponent implements OnInit {
       this.task.description = taskValue;
       this.editedTask.emit(this.task);
     }
+  }
+
+  onDeletePressed(){
+    this.deleteTask.emit(this.task);
+    //this.focusOffInput();
+    console.log("fjdkla");
   }
 
   //Called when the edit icon is clicked next to a task.

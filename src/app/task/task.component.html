@@ -7,11 +7,11 @@
 -->
 <mat-card class = "mb-3 mt-3"  >
   <mat-card-content>
-    <p *ngIf="!renderInputTask" > {{task.description}} <i class = "material-icons float-right" (click)="onEdit()">edit</i>  </p>
+    <p *ngIf="!renderInputTask" > {{task.description}} <i class = "material-icons float-right" (click)="onDeletePressed()">delete</i>  <i class = "material-icons float-right" (click)="onEdit()">edit</i>  </p>
 
     <mat-form-field *ngIf="renderInputTask">
       <!-- () denotes event-binding.  a template statement responds to an event - it has a side effect -->
-      <input matInput #inputTask placeholder="Add a task..." (keyup.enter) = "onEnterPressed(inputTask.value)"   [value]="task.description" [name]=[task.userId] (focusout)="focusOffInput()">
+      <input matInput #inputTask placeholder="Edit task..." (keyup.enter) = "onEnterPressed(inputTask.value)"   [value]="task.description" [name]=[task.userId] (focusout)="focusOffInput()" />
     </mat-form-field>
   </mat-card-content>
 </mat-card>
