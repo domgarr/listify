@@ -7,7 +7,7 @@
 -->
 <mat-card class = "mb-3 mt-3"  >
   <mat-card-content>
-    <p *ngIf="!renderInputTask" > {{task.description}} <i class = "material-icons" (click)="onEdit()">edit</i>  </p>
+    <p *ngIf="!renderInputTask" > {{task.description}} <i class = "material-icons float-right" (click)="onEdit()">edit</i>  </p>
 
     <mat-form-field *ngIf="renderInputTask">
       <!-- () denotes event-binding.  a template statement responds to an event - it has a side effect -->
