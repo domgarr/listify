@@ -2,6 +2,7 @@ import {Task} from './task';
 
 
 export class TaskList {
+  private taskListId: number;
   private taskListName : string;
   private tasks : Task[];
 

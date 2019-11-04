@@ -1,6 +1,10 @@
 <mat-card>
   <mat-card-header>
-    <p class="pt-1 pb-1 h5" *ngIf="!editingTaskListName"> {{taskList.getTaskListName()}} <i class = "material-icons float-right" (click)="onDeleteTaskList()">delete</i>  <i class = "material-icons float-right" (click)="onEditTaskListName()">edit</i>  </p>
+    <div class="text-center" *ngIf="!editingTaskListName">
+      <p class="pt-1 pb-1 h5" > {{taskList.getTaskListName()}} </p>
+     <i class = "material-icons" (click)="onEditTaskListName()">edit</i>   <i class = "material-icons" (click)="onDeleteTaskList()">delete</i> 
+    </div>
+
     <div *ngIf="editingTaskListName">
       <mat-form-field>
         <input #inputTaskListName matInput  placeholder="Name the list of tasks..." [value]="taskList.getTaskListName()" (keyup.enter) = "renameTaskList(inputTaskListName.value)" (focusout) = "focusOffEditTaskListName()">
