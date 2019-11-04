@@ -1,11 +1,12 @@
-<mat-card-header>
+<mat-card-header  *ngIf="addingNewTask">
   <div>
     <mat-form-field>
       <!-- () denotes event-binding.  a template statement responds to an event - it has a side effect -->
-      <input matInput #inputTask (keyup.enter) = "onEnterPressed(inputTask.value)" (keyup)="onKey(inputTask.value)"  placeholder="Add a task..." [value]="description" name="please work" >
+      <input matInput #inputTask (keyup.enter) = "onEnterPressed(inputTask.value)" (keyup)="onKey(inputTask.value)"  placeholder="Add a task..." [value]="description" name="please work" (focusout)="focusOffInputTask()">
     </mat-form-field>
   </div>
-  <div>
-    <i class = "material-icons">add</i>
-  </div>
 </mat-card-header>
+
+<div *ngIf="!addingNewTask" class = "text-center" (click)="onClickAddIcon()">
+  <i class = "material-icons text-cente" >add</i>
+</div>
