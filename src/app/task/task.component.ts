@@ -44,7 +44,6 @@ export class TaskComponent implements OnInit {
   //Called when the edit icon is clicked next to a task.
   onEdit(){
     this.focusOnInput();
-    this.cardTaskClasses = this.defaultCardTaskClasses;
 
     /*
      After focusOnInput() is called, the input is rendered. Prior to this the input is undefined.
