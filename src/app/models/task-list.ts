@@ -14,7 +14,7 @@ export class TaskList {
     return this.taskListName;
   }
 
-  setTaskListName() : void {
+  setTaskListName(taskListName : string) : void {
     this.taskListName = taskListName;
   }
 
