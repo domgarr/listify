@@ -2,7 +2,7 @@
   <mat-card-header>
     <div class="text-center" *ngIf="!editingTaskListName">
       <p class="pt-1 pb-1 h5" > {{taskList.getTaskListName()}} </p>
-     <i class = "material-icons" (click)="onEditTaskListName()">edit</i>   <i class = "material-icons" (click)="onDeleteTaskList()">delete</i> 
+     <i class = "material-icons" (click)="onEditTaskListName()">edit</i>   <i class = "material-icons" (click)="onDeleteTaskList()">delete</i>
     </div>
 
     <div *ngIf="editingTaskListName">
@@ -11,6 +11,6 @@
       </mat-form-field>
     </div>
   </mat-card-header>
-  <app-task *ngFor="let task of tasks" [task]="task" (editedTask) = onEditedTask($event) (deleteTask) = onDeleteTask($event)> </app-task>
+  <app-task *ngFor="let task of taskList.getTasks()" [task]="task" (editedTask) = onEditedTask($event) (deleteTask) = onDeleteTask($event)> </app-task>
   <app-new-task (newTaskAdded) = onNewTaskAdded($event)> </app-new-task>
 </mat-card>

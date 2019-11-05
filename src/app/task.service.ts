@@ -25,14 +25,14 @@ import {TASKS} from './models/mock-tasks';
   providedIn: 'root'
 })
 export class TaskService {
-  private todosUrl = 'http://localhost:8080/todos/38'
+  private readonly todosUrl = 'http://localhost:8080/todos/'
 
   constructor(private http : HttpClient) { }
 
   //Now that getTodos return an observable the difference is adding subscribe.
-  getTodos(): Observable<Task[]> {
+  getTasks(taskListId : number): Observable<Task[]> {
     //of(TODOS) will return a single value - array of todos
-    return this.http.get<Task[]>(this.todosUrl);
+    return this.http.get<Task[]>(this.todosUrl + taskListId);
   }
 
   setTodoDone() : void {

@@ -1,4 +1,4 @@
-import { Component, OnInit, Input, ElementRef, ChangeDetectorRef, ViewChild } from '@angular/core';
+import { Component, OnInit, Input, ElementRef, ChangeDetectorRef, ViewChild} from '@angular/core';
 import {Task} from '../models/task';
 import {TaskList} from '../models/task-list';
 
@@ -15,11 +15,7 @@ export class TaskListComponent implements OnInit {
   editingTaskListName = false;
 
     taskList : TaskList;
-    tasks : Task[] = [
-      {"userId":1, "listId":38, "description":"Drink one cup of water", "isDone":false},
-      {"userId":3, "listId":38,"description":"Drink one cup of Coffee", "isDone":false},
-      {"userId":2, "listId":38,"description":"Eat a banana", "isDone":false}
-    ];
+    
 
     @ViewChild('inputTaskListName', {static:false}) inputTaskListName : ElementRef;
 
@@ -27,23 +23,25 @@ export class TaskListComponent implements OnInit {
   Upon instantiation Angular will use its DI system to set taskservice to a singleton instance of taskservice.
 */
   constructor(private ref : ChangeDetectorRef, private taskService: TaskService) {
-    this.taskList = new TaskList("Morning Routine", this.tasks );
+    this.taskList = new TaskList( );
+    this.taskList.setTaskListName("Morning Routine");
    }
 
   ngOnInit() {
-    this.getTasks();
+    //Best practice to init Class here since getTasks is making an async call.
+    this.getTasks(38);
   }
 
-  getTasks() : void {
-    //Revist the => function
-    //This statement will wait for Observable to emit an array of tasks.
-    //this.taskService.getTasks().subscribe(tasks => this.tasks = tasks);
-    console.log(this.taskList.getTasks());
+  getTasks(listTaskId) : void {
+     this.taskService.getTasks(listTaskId).subscribe(tasks => this.taskList.setTasks(tasks));
+     console.log(this.taskList);
   }
 
   onNewTaskAdded(task : Task){
     console.log(task);
     this.taskList.getTasks().push(task);
+    console.log(this.taskList);
+
   }
 
   onEditedTask(editedtask: Task){
@@ -82,5 +80,6 @@ export class TaskListComponent implements OnInit {
   onDeleteTaskList(){
     //TODO
   }
+
 
 }

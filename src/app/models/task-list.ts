@@ -6,9 +6,9 @@ export class TaskList {
   private taskListName : string;
   private tasks : Task[];
 
-  public constructor(taskListName : string, tasks : Task[] ){
-    this.taskListName = taskListName;
-    this.tasks = tasks;
+  public constructor( ){
+    this.taskListName = "";
+    this.tasks = null;
   }
 
   getTaskListName() : string {
