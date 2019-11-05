@@ -12,7 +12,6 @@ import {HttpClient, HttpHeaders} from '@angular/common/http';
   In this case, This service will instantiate TodoService and provde the service.
 */
 import {Task} from './models/task';
-import {TASKS} from './models/mock-tasks';
 
 /*
   When providing at the root level. Angular creates a single, shared instance of TodoService
@@ -25,14 +24,19 @@ import {TASKS} from './models/mock-tasks';
   providedIn: 'root'
 })
 export class TaskService {
-  private readonly todosUrl = 'http://localhost:8080/todos/'
+  private readonly todosUrl = 'http://localhost:8080/todos'
 
   constructor(private http : HttpClient) { }
 
   //Now that getTodos return an observable the difference is adding subscribe.
   getTasks(taskListId : number): Observable<Task[]> {
     //of(TODOS) will return a single value - array of todos
-    return this.http.get<Task[]>(this.todosUrl + taskListId);
+    return this.http.get<Task[]>(this.todosUrl + "/" + taskListId);
+  }
+
+  saveTask(newTask : Task) : Observable<Task> {
+    //TODO: Add error handling.
+    return this.http.post<Task>(this.todosUrl, newTask);
   }
 
   setTodoDone() : void {

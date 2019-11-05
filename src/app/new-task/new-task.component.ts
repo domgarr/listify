@@ -2,6 +2,7 @@ import { Component, OnInit, Input,Output, ViewChild, EventEmitter, NgModule, Ele
 import { FormsModule } from '@angular/forms';
 
 import {Task} from '../models/task';
+import {TaskService} from '../task.service';
 
 @Component({
   selector: 'app-new-task',
@@ -17,7 +18,7 @@ export class NewTaskComponent implements OnInit {
 
   @Output() newTaskAdded = new EventEmitter<Task>();
 
-  constructor(private ref : ChangeDetectorRef) {
+  constructor(private ref : ChangeDetectorRef, private taskService : TaskService) {
     this.addingNewTask = false;
   }
 
@@ -30,10 +31,6 @@ export class NewTaskComponent implements OnInit {
   }
 
   onKey(value){
-    //Check if escape is pressed.
-
-    //console.log(this.description);
-
     //Using onKey here I emulate Two-way binding. Two way binding using ngModel does not work with MatInput.
     this.description = value;
   }
@@ -43,12 +40,15 @@ export class NewTaskComponent implements OnInit {
     //TODO: Rename Todo to Task
     //Create new task
     let task = new Task();
-    task.userId = 1;
+    task.listId = 38
     task.description = value;
-    //Make call to DB to add new task.
+    task.isDone = false;
 
+    console.log(task);
+
+    //Make call to DB to add new task.
+    this.taskService.saveTask(task).subscribe(task => this.newTaskAdded.emit(task));
     //Add returned object to the existing array.
-    this.newTaskAdded.emit(task);
     //Set textbox to empty
     this.description = "";
     console.log(this);
