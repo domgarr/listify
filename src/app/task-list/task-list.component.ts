@@ -24,7 +24,7 @@ export class TaskListComponent implements OnInit {
 */
   constructor(private ref : ChangeDetectorRef, private taskService: TaskService) {
     this.taskList = new TaskList( );
-    this.taskList.setTaskListName("Morning Routine");
+    this.taskList.name = "Morning Routine";
    }
 
   ngOnInit() {
@@ -33,38 +33,38 @@ export class TaskListComponent implements OnInit {
   }
 
   getTasks(listTaskId) : void {
-     this.taskService.getTasks(listTaskId).subscribe(tasks => this.taskList.setTasks(tasks));
+     this.taskService.getTasks(listTaskId).subscribe(tasks => this.taskList.tasks = tasks);
      console.log(this.taskList);
   }
 
   onNewTaskAdded(task : Task){
     console.log(task);
-    this.taskList.getTasks().push(task);
+    this.taskList.tasks.push(task);
     console.log(this.taskList);
 
   }
 
   onEditedTask(editedtask: Task){
-    let existingtask = this.taskList.getTasks().find(task => task.taskId === editedtask.taskId );
-    let index = this.taskList.getTasks().indexOf(existingtask);
-    this.taskList.getTasks()[index] = editedtask;
-    console.log(this.taskList.getTasks());
+    let existingtask = this.taskList.tasks.find(task => task.taskId === editedtask.taskId );
+    let index = this.taskList.tasks.indexOf(existingtask);
+    this.taskList.tasks[index] = editedtask;
+    console.log(this.taskList.tasks);
   }
 
   onDeleteTask(taskToDelete : Task){
     console.log(taskToDelete);
-    let existingtask = this.taskList.getTasks().find(task => task.taskId === taskToDelete.taskId );
-    let index = this.taskList.getTasks().indexOf(existingtask);
+    let existingtask = this.taskList.tasks.find(task => task.taskId === taskToDelete.taskId );
+    let index = this.taskList.tasks.indexOf(existingtask);
     console.log(index);
-    this.taskList.getTasks().splice(index, 1);
-    console.log(this.taskList.getTasks());
+    this.taskList.tasks.splice(index, 1);
+    console.log(this.taskList.tasks);
   }
 
   renameTaskList(newTaskListName : string){
-    this.taskList.setTaskListName(newTaskListName);
+    this.taskList.name = newTaskListName ;
     this.editingTaskListName = false;
 
-    console.log(this.taskList.getTaskListName());
+    console.log(this.taskList.name);
   }
 
   onEditTaskListName(){

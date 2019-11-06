@@ -24,23 +24,23 @@ import {Task} from './models/task';
   providedIn: 'root'
 })
 export class TaskService {
-  private readonly todosUrl = 'http://localhost:8080/todos'
+  private readonly taskUrl = 'http://localhost:8080/task'
 
   constructor(private http : HttpClient) { }
 
   //Now that getTodos return an observable the difference is adding subscribe.
   getTasks(taskListId : number): Observable<Task[]> {
     //of(TODOS) will return a single value - array of todos
-    return this.http.get<Task[]>(this.todosUrl + "/" + taskListId);
+    return this.http.get<Task[]>(this.taskUrl + "/" + taskListId);
   }
 
   saveTask(newTask : Task) : Observable<Task> {
     //TODO: Add error handling.
-    return this.http.post<Task>(this.todosUrl, newTask);
+    return this.http.post<Task>(this.taskUrl, newTask);
   }
 
   deleteTask(id : number) : Observable<any> {
-    return this.http.delete<any>(this.todosUrl + "/" + id, {observe:"response"});
+    return this.http.delete<any>(this.taskUrl + "/" + id, {observe:"response"});
   }
 
   setTodoDone() : void {

@@ -2,28 +2,40 @@ import {Task} from './task';
 
 
 export class TaskList {
-  private taskListId: number;
-  private taskListName : string;
-  private tasks : Task[];
+  taskListId: number;
+  userId : number;
+  name : string;
+  tasks : Task[];
 
   public constructor( ){
-    this.taskListName = "";
-    this.tasks = null;
+    this.name = "";
   }
 
-  getTaskListName() : string {
-    return this.taskListName;
+  get TaskListId() {
+    return this.taskListId;
   }
 
-  setTaskListName(taskListName : string) : void {
-    this.taskListName = taskListName;
+  get UserId() {
+    return this.userId;
   }
 
-  getTasks() : Task[] {
+  set UserId(userId : number) {
+    this.userId = userId;
+  }
+
+  get Name() {
+    return this.name;
+  }
+
+  set Name(name : string) {
+    this.name = name;
+  }
+
+  get Tasks() : Task[] {
     return this.tasks;
   }
 
-  setTasks(tasks : Task[]) : void {
+  set Tasks(tasks : Task[]) {
     this.tasks = tasks;
   }
 

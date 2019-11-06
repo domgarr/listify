@@ -12,6 +12,7 @@ import { MatFormFieldModule, MatInputModule } from '@angular/material';
 import {MatCardModule} from '@angular/material/card';
 import {MatGridListModule} from '@angular/material/grid-list';
 import { NewTaskComponent } from './new-task/new-task.component';
+import { NewTaskListComponent } from './new-task-list/new-task-list.component';
 
 
 @NgModule({
@@ -19,7 +20,8 @@ import { NewTaskComponent } from './new-task/new-task.component';
     AppComponent,
     TaskComponent,
     TaskListComponent,
-    NewTaskComponent
+    NewTaskComponent,
+    NewTaskListComponent
   ],
   imports: [
     BrowserModule,
