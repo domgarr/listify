@@ -1,6 +1,8 @@
 import { Component, OnInit,OnChanges, Input, Output, EventEmitter, ViewChild, ElementRef, ChangeDetectorRef} from '@angular/core';
 import {Task} from '../models/task';
 
+import {TaskService} from '../task.service';
+
 @Component({
   selector: 'app-task',
   templateUrl: './task.component.html',
@@ -19,7 +21,7 @@ export class TaskComponent implements OnInit {
 
   @ViewChild('inputTask', {static:false}) inputTask: ElementRef; //Looks for the element containing #inputTask and gets a reference to it.
 
-  constructor(private changeDetector : ChangeDetectorRef) {
+  constructor(private changeDetector : ChangeDetectorRef, private taskService : TaskService) {
     this.renderInputTask = false;
     this.cardTaskClasses = this.defaultCardTaskClasses;
   }
@@ -38,7 +40,14 @@ export class TaskComponent implements OnInit {
   }
 
   onDeletePressed(){
-    this.deleteTask.emit(this.task);
+    console.log("onDelte: " + this.task.taskId);
+    this.taskService.deleteTask(this.task.taskId).subscribe((response) => this.deleteStatusCheck(response));
+  }
+
+  deleteStatusCheck(response){
+    if(response.status === 200){
+      this.deleteTask.emit(this.task);
+    }
   }
 
   //Called when the edit icon is clicked next to a task.

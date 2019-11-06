@@ -15,7 +15,7 @@ export class TaskListComponent implements OnInit {
   editingTaskListName = false;
 
     taskList : TaskList;
-    
+
 
     @ViewChild('inputTaskListName', {static:false}) inputTaskListName : ElementRef;
 
@@ -45,7 +45,7 @@ export class TaskListComponent implements OnInit {
   }
 
   onEditedTask(editedtask: Task){
-    let existingtask = this.taskList.getTasks().find(task => task.userId === editedtask.userId );
+    let existingtask = this.taskList.getTasks().find(task => task.taskId === editedtask.taskId );
     let index = this.taskList.getTasks().indexOf(existingtask);
     this.taskList.getTasks()[index] = editedtask;
     console.log(this.taskList.getTasks());
@@ -53,7 +53,7 @@ export class TaskListComponent implements OnInit {
 
   onDeleteTask(taskToDelete : Task){
     console.log(taskToDelete);
-    let existingtask = this.taskList.getTasks().find(task => task.userId === taskToDelete.userId );
+    let existingtask = this.taskList.getTasks().find(task => task.taskId === taskToDelete.taskId );
     let index = this.taskList.getTasks().indexOf(existingtask);
     console.log(index);
     this.taskList.getTasks().splice(index, 1);

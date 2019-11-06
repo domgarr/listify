@@ -3,7 +3,7 @@ import { Injectable } from '@angular/core';
   HttpClient requests returns rxjs Objservable
 */
 import {Observable, of} from 'rxjs';
-import {HttpClient, HttpHeaders} from '@angular/common/http';
+import {HttpClient, HttpHeaders, HttpResponse} from '@angular/common/http';
 /*
   For a Service to be available to the DI system and availablle for Injection by angular
   it must be registered using a 'provider'
@@ -37,6 +37,10 @@ export class TaskService {
   saveTask(newTask : Task) : Observable<Task> {
     //TODO: Add error handling.
     return this.http.post<Task>(this.todosUrl, newTask);
+  }
+
+  deleteTask(id : number) : Observable<any> {
+    return this.http.delete<any>(this.todosUrl + "/" + id, {observe:"response"});
   }
 
   setTodoDone() : void {
