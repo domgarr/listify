@@ -1,16 +1,16 @@
 <mat-card>
   <mat-card-header>
     <div class="text-center" *ngIf="!editingTaskListName">
-      <p class="pt-1 pb-1 h5" > {{taskList.getTaskListName()}} </p>
+      <p class="pt-1 pb-1 h5" > {{taskList.name}} </p>
      <i class = "material-icons" (click)="onEditTaskListName()">edit</i>   <i class = "material-icons" (click)="onDeleteTaskList()">delete</i>
     </div>
 
     <div *ngIf="editingTaskListName">
       <mat-form-field>
-        <input #inputTaskListName matInput  placeholder="Name the list of tasks..." [value]="taskList.getTaskListName()" (keyup.enter) = "renameTaskList(inputTaskListName.value)" (focusout) = "focusOffEditTaskListName()">
+        <input #inputTaskListName matInput  placeholder="Name the list of tasks..." [value]="taskList.name" (keyup.enter) = "renameTaskList(inputTaskListName.value)" (focusout) = "focusOffEditTaskListName()">
       </mat-form-field>
     </div>
   </mat-card-header>
-  <app-task *ngFor="let task of taskList.getTasks()" [task]="task" (editedTask) = onEditedTask($event) (deleteTask) = onDeleteTask($event)> </app-task>
-  <app-new-task (newTaskAdded) = onNewTaskAdded($event)> </app-new-task>
+  <app-task *ngFor="let task of taskList.tasks" [task]="task" (editedTask) = onEditedTask($event) (deleteTask) = onDeleteTask($event)> </app-task>
+  <app-new-task (newTaskAdded) = onNewTaskAdded($event) [listId]="taskList.taskListId"> </app-new-task>
 </mat-card>

@@ -13,6 +13,8 @@ import {TaskService} from '../task.service';
 export class NewTaskComponent implements OnInit {
   description : string;
   addingNewTask : boolean;
+
+  @Input() listId;
   //static:false : set it to True to resolve query results before change detection runs
   @ViewChild('inputTask', {static:false}) inputTask : ElementRef;
 
@@ -40,7 +42,7 @@ export class NewTaskComponent implements OnInit {
     //TODO: Rename Todo to Task
     //Create new task
     let task = new Task();
-    task.listId = 38
+    task.listId = this.listId;
     task.description = value;
     task.isDone = false;
 

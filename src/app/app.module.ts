@@ -13,6 +13,7 @@ import {MatCardModule} from '@angular/material/card';
 import {MatGridListModule} from '@angular/material/grid-list';
 import { NewTaskComponent } from './new-task/new-task.component';
 import { NewTaskListComponent } from './new-task-list/new-task-list.component';
+import { TaskListContainerComponent } from './task-list-container/task-list-container.component';
 
 
 @NgModule({
@@ -21,7 +22,8 @@ import { NewTaskListComponent } from './new-task-list/new-task-list.component';
     TaskComponent,
     TaskListComponent,
     NewTaskComponent,
-    NewTaskListComponent
+    NewTaskListComponent,
+    TaskListContainerComponent
   ],
   imports: [
     BrowserModule,

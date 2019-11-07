@@ -14,7 +14,7 @@ export class TaskListComponent implements OnInit {
 
   editingTaskListName = false;
 
-    taskList : TaskList;
+    @Input() taskList : TaskList;
 
 
     @ViewChild('inputTaskListName', {static:false}) inputTaskListName : ElementRef;
@@ -23,22 +23,24 @@ export class TaskListComponent implements OnInit {
   Upon instantiation Angular will use its DI system to set taskservice to a singleton instance of taskservice.
 */
   constructor(private ref : ChangeDetectorRef, private taskService: TaskService) {
-    this.taskList = new TaskList( );
-    this.taskList.name = "Morning Routine";
+    console.log("TaskList: " + this.taskList);
    }
 
   ngOnInit() {
     //Best practice to init Class here since getTasks is making an async call.
-    this.getTasks(38);
+    this.getTasks(this.taskList.taskListId);
   }
 
   getTasks(listTaskId) : void {
      this.taskService.getTasks(listTaskId).subscribe(tasks => this.taskList.tasks = tasks);
-     console.log(this.taskList);
+     console.log("GetTasks" + this.taskList);
   }
 
   onNewTaskAdded(task : Task){
     console.log(task);
+    if(!this.taskList.tasks){
+      this.taskList.tasks = [];
+    }
     this.taskList.tasks.push(task);
     console.log(this.taskList);
 
