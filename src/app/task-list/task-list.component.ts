@@ -1,9 +1,12 @@
-import { Component, OnInit, Input, ElementRef, ChangeDetectorRef, ViewChild} from '@angular/core';
+import { Component, OnInit,OnDestroy, Input, ElementRef, ChangeDetectorRef, ViewChild, Output, EventEmitter} from '@angular/core';
 import {Task} from '../models/task';
 import {TaskList} from '../models/task-list';
 
 
+
 import {TaskService} from '../task.service';
+import {TaskListService} from '../task-list.service';
+
 
 @Component({
   selector: 'app-task-list',
@@ -12,23 +15,34 @@ import {TaskService} from '../task.service';
 })
 export class TaskListComponent implements OnInit {
 
-  editingTaskListName = false;
+   editingTaskListName = false;
+
+   isDoneBatch = [];
 
     @Input() taskList : TaskList;
-
-
     @ViewChild('inputTaskListName', {static:false}) inputTaskListName : ElementRef;
+    @Output() deleteTaskList = new EventEmitter<any>(); //An event consumed by tasklist componenet.
+
 
 /*
   Upon instantiation Angular will use its DI system to set taskservice to a singleton instance of taskservice.
 */
-  constructor(private ref : ChangeDetectorRef, private taskService: TaskService) {
+  constructor(private ref : ChangeDetectorRef, private taskService: TaskService, private taskListService: TaskListService) {
     console.log("TaskList: " + this.taskList);
    }
 
   ngOnInit() {
     //Best practice to init Class here since getTasks is making an async call.
-    this.getTasks(this.taskList.taskListId);
+    this.getTasks(this.taskList.listId);
+
+    window.onbeforeunload = (ev) => {
+      this.taskService.batchUpdateTaskDone(this.isDoneBatch).subscribe(response =>{
+      });
+    }
+  }
+
+  ngOnDestroy(){
+
   }
 
   getTasks(listTaskId) : void {
@@ -37,7 +51,6 @@ export class TaskListComponent implements OnInit {
   }
 
   onNewTaskAdded(task : Task){
-    console.log(task);
     if(!this.taskList.tasks){
       this.taskList.tasks = [];
     }
@@ -47,7 +60,7 @@ export class TaskListComponent implements OnInit {
   }
 
   onEditedTask(editedtask: Task){
-    let existingtask = this.taskList.tasks.find(task => task.taskId === editedtask.taskId );
+    let existingtask = this.taskList.tasks.find(task => task.id === editedtask.id );
     let index = this.taskList.tasks.indexOf(existingtask);
     this.taskList.tasks[index] = editedtask;
     console.log(this.taskList.tasks);
@@ -55,7 +68,7 @@ export class TaskListComponent implements OnInit {
 
   onDeleteTask(taskToDelete : Task){
     console.log(taskToDelete);
-    let existingtask = this.taskList.tasks.find(task => task.taskId === taskToDelete.taskId );
+    let existingtask = this.taskList.tasks.find(task => task.id === taskToDelete.id );
     let index = this.taskList.tasks.indexOf(existingtask);
     console.log(index);
     this.taskList.tasks.splice(index, 1);
@@ -63,9 +76,17 @@ export class TaskListComponent implements OnInit {
   }
 
   renameTaskList(newTaskListName : string){
-    this.taskList.name = newTaskListName ;
-    this.editingTaskListName = false;
 
+    let reqTaskList = {...this.taskList};
+    reqTaskList.name = newTaskListName;
+    reqTaskList.tasks = [];
+
+    this.taskListService.updateTaskListName(reqTaskList).subscribe((response) =>{
+      console.log(response);
+      this.taskList.name = newTaskListName ;
+    });
+
+    this.editingTaskListName = false;
     console.log(this.taskList.name);
   }
 
@@ -80,7 +101,15 @@ export class TaskListComponent implements OnInit {
   }
 
   onDeleteTaskList(){
-    //TODO
+    this.taskListService.deleteTaskList(this.taskList.listId).subscribe( response => {
+      console.log(this.taskList.listId);
+      this.deleteTaskList.emit(this.taskList.listId);
+    });
+  }
+
+  onDoneTask(task : Task){
+    console.log("Called onDoneTask")
+    this.isDoneBatch.push(task);
   }
 
 

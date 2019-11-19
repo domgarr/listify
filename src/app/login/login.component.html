@@ -1,0 +1,20 @@
+
+<app-header [renderMenu]="renderMenu" ></app-header>
+<div class = "row d-flex justify-content-center align-self-center align-items-middle h-80">
+	<div class = "col-sm-6 col-md-6 col-lg-6 " >
+		<mat-card class="p-5">
+			<mat-card-content>
+					<div class="alert alert-danger" [hidden]="!error">
+						There was a problem logging in. Please try again.
+					</div>
+					<form #f="ngForm" class="form-signin" (ngSubmit)="onSubmit(f)">
+						<input type="email" name="email"  class="form-control" placeholder="Username" required autofocus ngModel>
+						<input id="inputPassword" type="password" name="password"  class="form-control" placeholder="Password" required ngModel>
+						<button class="btn btn-lg btn-primary btn-block">Sign in</button>
+					</form>
+					<a class="lead float-right m-2" href="/sign-up"> Sign up here </a>
+			</mat-card-content>
+		</mat-card>
+	</div>
+</div>
+<app-footer> </app-footer>

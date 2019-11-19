@@ -13,8 +13,10 @@ export class TaskComponent implements OnInit {
   @Input() task : Task;
   @Output() editedTask = new EventEmitter<Task>(); //An event consumed by tasklist componenet.
   @Output() deleteTask = new EventEmitter<Task>(); //An event consumed by tasklist componenet.
+  @Output() doneTask = new EventEmitter<Task>(); //An event consumed by tasklist componenet.
 
-  defaultCardTaskClasses : string = "mb-3 mt-3";
+
+  defaultCardTaskClasses : string = "task mb-3 mt-3";
   cardTaskClasses : string;
 
   renderInputTask : boolean; //Used for controlling the rendering of task or editTask. When false, the edit option is not rendered.
@@ -27,6 +29,7 @@ export class TaskComponent implements OnInit {
   }
 
   ngOnInit(){
+    this.cardBackgroundColorChange();
   }
 
   //When enter is pressed whilst focused on inputTask, update the existing task.
@@ -35,13 +38,16 @@ export class TaskComponent implements OnInit {
     this.focusOffInput();
     if(taskValue.localeCompare(this.task.description) != 0 ){
       this.task.description = taskValue;
-      this.editedTask.emit(this.task);
+      this.taskService.updateTask(this.task).subscribe((response) => {
+        console.log(response);
+        this.editedTask.emit(this.task);
+      })
     }
   }
 
   onDeletePressed(){
-    console.log("onDelte: " + this.task.taskId);
-    this.taskService.deleteTask(this.task.taskId).subscribe((response) => this.deleteStatusCheck(response));
+    console.log("onDelte: " + this.task.id);
+    this.taskService.deleteTask(this.task.id).subscribe((response) => this.deleteStatusCheck(response));
   }
 
   deleteStatusCheck(response){
@@ -80,13 +86,15 @@ export class TaskComponent implements OnInit {
 
   onDone(ref){
     this.task.isDone = !this.task.isDone;
+    this.cardBackgroundColorChange();
+    this.doneTask.emit(this.task);
+  }
 
+  cardBackgroundColorChange(){
     if(this.task.isDone){
-      this.cardTaskClasses = this.cardTaskClasses.concat(" green");
+      this.cardTaskClasses = this.cardTaskClasses.replace("task","green");
     }else{
       this.cardTaskClasses = this.defaultCardTaskClasses;
     }
-    console.log(this.cardTaskClasses);
-    console.log("done");
   }
 }

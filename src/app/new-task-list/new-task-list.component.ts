@@ -1,4 +1,4 @@
-import { Component, OnInit, ElementRef, ChangeDetectorRef, ViewChild } from '@angular/core';
+import { Component, OnInit, ElementRef, ChangeDetectorRef, ViewChild, Output, EventEmitter } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 
 import {TaskList} from '../models/task-list';
@@ -15,8 +15,8 @@ export class NewTaskListComponent implements OnInit {
   taskListName : string;
   renderInput : boolean;
 
-
- @ViewChild('inputTaskListName', {static:false}) inputTaskListName : ElementRef;
+  @Output() newTaskList = new EventEmitter<TaskList>(); //An event consumed by tasklist componenet.
+  @ViewChild('inputTaskListName', {static:false}) inputTaskListName : ElementRef;
 
   constructor(private ref : ChangeDetectorRef, private taskListService : TaskListService) {
     this.taskListName =""
@@ -38,9 +38,8 @@ export class NewTaskListComponent implements OnInit {
     if(taskListName){
       let taskList = new TaskList();
       taskList.name = taskListName;
-      taskList.userId = this.userId;
       //Call a service to add a new Task listTaskId
-      this.taskListService.saveTaskList(taskList).subscribe((ojb) => console.log(ojb));
+      this.taskListService.saveTaskList(taskList).subscribe((newTaskList) => this.newTaskList.emit(newTaskList));
       //Clear taskListName to an empty string to resuse component for adding new Task list in the future.
       this.taskListName = "";
     }

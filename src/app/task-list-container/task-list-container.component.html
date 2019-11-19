@@ -1,8 +1,9 @@
 
-<mat-grid-list cols="2" >
-  <mat-grid-tile [colspan]=1 *ngFor="let taskList of taskLists">
-    <app-task-list  [taskList]="taskList"> </app-task-list>
-  </mat-grid-tile>
-</mat-grid-list>
-
-<p> Oops, you have no lists </p>
+  <div class = "row task-list-container justify-content-center">
+    <div class="col-sm-5 col-md-5 col-lg-5 m-2" *ngFor="let taskList of taskLists">
+      <app-task-list (deleteTaskList)="onDeleteTaskList($event)"  [taskList]="taskList"> </app-task-list>
+    </div>
+    <div class="col-sm-5 col-md-5 col-lg-5 m-2">
+      <app-new-task-list (newTaskList)="onNewTaskListAdded($event)" ></app-new-task-list>
+    </div>
+  </div>

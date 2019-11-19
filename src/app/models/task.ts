@@ -1,5 +1,5 @@
 export class Task {
-  taskId : number;
+  id : number;
   listId: number;
   description: string;
   isDone :boolean;
@@ -8,12 +8,12 @@ export class Task {
         this.description = "";
     }
 
-  get TaskId() : number {
-    return this.taskId;
+  get Id() : number {
+    return this.id;
   }
 
-  set TaskId(taskId : number){
-    this.taskId = taskId;
+  set Id(id : number){
+    this.id = id;
   }
 
   get ListId() : number {

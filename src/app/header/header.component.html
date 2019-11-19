@@ -1,0 +1,16 @@
+<header class="p-4 h-20">
+  <div class ="row align-items-start addGrey">
+    <div class = "col-sm-10 col-md-10 col-lg-10">
+      <h3 (click)="onTitleClick()"> Listify </h3>
+    </div>
+
+    <div *ngIf="renderMenu" ngbDropdown  ngbDropdown display="dynamic" placement="bottom-right" class = "col-sm-2 col-md-2 col-lg-2 d-inline-block float-right text-center">
+      Welcome {{username}}
+      <i class = "material-icons" id="menuItems" ngbDropdownToggle>account_circle</i>
+      <div ngbDropdownMenu aria-labelled="menuItems">
+        <li ngbDropdownItem  >Profile</li>
+        <li ngbDropdownItem (click)="logout()" >Logout</li>
+      </div>
+    </div>
+  </div>
+</header>

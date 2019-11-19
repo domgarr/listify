@@ -1,4 +1,4 @@
-<mat-card #cardTask [ngClass] = "cardTaskClasses"   >
+<mat-card #cardTask [ngClass] = "cardTaskClasses" class="w-100"  >
   <mat-card-content>
     <p class="pt-1 pb-1" *ngIf="!renderInputTask" (click)="onDone(cardTask)" > {{task.description}} <i class = "material-icons float-right" (click)="onDeletePressed()">delete</i>  <i class = "material-icons float-right" (click)="onEdit()">edit</i>  </p>
 

@@ -2,7 +2,7 @@ import {Task} from './task';
 
 
 export class TaskList {
-  taskListId: number;
+  listId: number;
   userId : number;
   name : string;
   tasks : Task[];
@@ -12,7 +12,7 @@ export class TaskList {
   }
 
   get TaskListId() {
-    return this.taskListId;
+    return this.listId;
   }
 
   get UserId() {

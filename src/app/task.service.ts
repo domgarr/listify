@@ -24,6 +24,14 @@ import {Task} from './models/task';
   providedIn: 'root'
 })
 export class TaskService {
+
+  readonly httpOptions = {
+    headers: new HttpHeaders({
+      'Content-Type':  'application/json',
+      'Authorization': localStorage.getItem("id_token")
+    })
+  };
+
   private readonly taskUrl = 'http://localhost:8080/task'
 
   constructor(private http : HttpClient) { }
@@ -31,19 +39,35 @@ export class TaskService {
   //Now that getTodos return an observable the difference is adding subscribe.
   getTasks(taskListId : number): Observable<Task[]> {
     //of(TODOS) will return a single value - array of todos
-    return this.http.get<Task[]>(this.taskUrl + "/" + taskListId);
+    return this.http.get<Task[]>(this.taskUrl + "/" + taskListId, this.httpOptions);
   }
 
   saveTask(newTask : Task) : Observable<Task> {
     //TODO: Add error handling.
-    return this.http.post<Task>(this.taskUrl, newTask);
+    console.log(this.httpOptions);
+    return this.http.post<Task>(this.taskUrl, newTask, this.httpOptions);
   }
 
   deleteTask(id : number) : Observable<any> {
-    return this.http.delete<any>(this.taskUrl + "/" + id, {observe:"response"});
+    /* ... is the spread operator. It will take all fields from httpOptions
+    and spread/copy over to our instanace obj of httpOptions local only to this function.
+    */
+    let httpOptions = {...this.httpOptions};
+
+    httpOptions.observe = "response";
+    console.log(httpOptions);
+    return this.http.delete<any>(this.taskUrl + "/" + id, httpOptions);
   }
 
-  setTodoDone() : void {
-    //return this.http.post
+  /* By using PUT, the server considers the entity (Task) to be a modified version of
+  the task already existing in the db and request that the existing task be modifed. whilst
+  PATCH the existing resource (Task) should be modified to produce a new version.
+  */
+  updateTask(task : Task) : void{
+    return this.http.put(this.taskUrl, task, this.httpOptions);
+  }
+
+  batchUpdateTaskDone(tasks: Task[]) : void {
+    return this.http.put(this.taskUrl + '/' + "is-done", tasks, this.httpOptions);
   }
 }

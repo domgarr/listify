@@ -8,17 +8,32 @@ import {TaskList} from './models/task-list';
   providedIn: 'root'
 })
 export class TaskListService {
+  //If this service is called - it has already passed the token_id check.
+  readonly httpOptions = {
+    headers: new HttpHeaders({
+      'Content-Type':  'application/json',
+      'Authorization': localStorage.getItem("id_token")
+    })
+  };
 
  private readonly taskListUrl = "http://localhost:8080/tasklist";
 
   constructor(private http : HttpClient) { }
 
   saveTaskList(taskList : TaskList) : Observable<TaskList> {
-    return this.http.post<TaskList>(this.taskListUrl, taskList);
+    return this.http.post<TaskList>(this.taskListUrl, taskList, this.httpOptions);
   }
 
-  getAllTaskListByUserId(userId : number) : Observable<TaskList[]> {
-    return this.http.get<TaskList[]>(this.taskListUrl + '/' + userId);
+  getAllTaskLists() : Observable<TaskList[]> {
+    return this.http.get<TaskList[]>(this.taskListUrl,this.httpOptions);
+  }
+
+  updateTaskListName(taskList : TaskList): Observable<any> {
+    return this.http.put(this.taskListUrl, taskList, this.httpOptions);
+  }
+
+  deleteTaskList(listId): Observable<any>  {
+    return this.http.delete(this.taskListUrl + '/' + listId, this.httpOptions);
   }
 
 }

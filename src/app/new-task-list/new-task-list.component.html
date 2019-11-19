@@ -1,11 +1,13 @@
-<mat-card >
-  <mat-card-content >
+
+<div class="card" >
+  <div class="card-body" >
     <div (click)="onEdit()" >
-      <p class="pt-1 pb-1" *ngIf="!renderInput" > <i class = "material-icons" >add</i> Add a new list </p>
+      <div *ngIf="!renderIput"><i class = "material-icons align-middle" >add</i> Add a new list </div>
+      <mat-form-field *ngIf="renderInput">
+        <!-- () denotes event-binding.  a template statement responds to an event - it has a side effect -->
+        <input matInput #inputTaskListName placeholder="Adding a new task list..." (keyup.enter) = "onEnterPressed(inputTaskListName.value)"   [value]="taskListName" [name]="taskListName" (focusout)="focusOffInput()" />
+      </mat-form-field>
     </div>
-    <mat-form-field *ngIf="renderInput">
-      <!-- () denotes event-binding.  a template statement responds to an event - it has a side effect -->
-      <input matInput #inputTaskListName placeholder="Adding a new task list..." (keyup.enter) = "onEnterPressed(inputTaskListName.value)"   [value]="taskListName" [name]="taskListName" (focusout)="focusOffInput()" />
-    </mat-form-field>
-  </mat-card-content>
-</mat-card>
+
+  </div>
+</div>

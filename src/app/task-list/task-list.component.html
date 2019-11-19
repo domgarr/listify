@@ -1,8 +1,11 @@
-<mat-card>
-  <mat-card-header>
-    <div class="text-center" *ngIf="!editingTaskListName">
-      <p class="pt-1 pb-1 h5" > {{taskList.name}} </p>
-     <i class = "material-icons" (click)="onEditTaskListName()">edit</i>   <i class = "material-icons" (click)="onDeleteTaskList()">delete</i>
+<div class="card scroll-400px w-100">
+  <div >
+    <div class="card-title" *ngIf="!editingTaskListName">
+      <div class="col-10 p-1 pb-1 h5" > {{taskList.name}}  </div>
+      <div class = "col-2 float-right">
+        <i class = "material-icons p-1" (click)="onEditTaskListName()">edit</i>
+        <i class = "material-icons p-1" (click)="onDeleteTaskList()">delete</i>
+      </div>
     </div>
 
     <div *ngIf="editingTaskListName">
@@ -10,7 +13,9 @@
         <input #inputTaskListName matInput  placeholder="Name the list of tasks..." [value]="taskList.name" (keyup.enter) = "renameTaskList(inputTaskListName.value)" (focusout) = "focusOffEditTaskListName()">
       </mat-form-field>
     </div>
-  </mat-card-header>
-  <app-task *ngFor="let task of taskList.tasks" [task]="task" (editedTask) = onEditedTask($event) (deleteTask) = onDeleteTask($event)> </app-task>
-  <app-new-task (newTaskAdded) = onNewTaskAdded($event) [listId]="taskList.taskListId"> </app-new-task>
-</mat-card>
+  </div>
+  <div class = "card-body">
+    <app-task *ngFor="let task of taskList.tasks" [task]="task" (editedTask) = onEditedTask($event) (deleteTask) = onDeleteTask($event) (doneTask) ="onDoneTask($event)"> </app-task>
+    <app-new-task (newTaskAdded) = onNewTaskAdded($event) [listId]="taskList.listId"> </app-new-task>
+  </div>
+</div>

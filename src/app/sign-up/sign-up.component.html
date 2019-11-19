@@ -1,0 +1,22 @@
+<app-header></app-header>
+<div class = "row d-flex justify-content-center align-self-center align-items-middle h-80">
+	<div class = "col-sm-6 col-md-6 col-lg-6 " >
+		<mat-card class="p-5">
+			<mat-card-content>
+					<div class="alert alert-danger" [hidden]="!error">
+						There was a problem logging in. Please try again.
+					</div>
+          <div class="alert alert-danger" [hidden]="!passwordMatchError">
+            The password and confirmed passwords do not match.
+          </div>
+					<form #formSignup="ngForm" class="form-signin" (ngSubmit)="onSubmit(formSignup)">
+						<input type="email" name="email"  class="form-control m-1" placeholder="Username" required autofocus ngModel>
+						<input id="inputPassword" type="password" name="password"  class="form-control m-1" placeholder="Password" required ngModel>
+            <input id="inputConfirmedPassword" type="password" name="confirmedPassword"  class="form-control m-1" placeholder="Confirm Password" required ngModel>
+            <button class="btn btn-lg btn-primary btn-block">Sign up</button>
+					</form>
+			</mat-card-content>
+		</mat-card>
+	</div>
+</div>
+<app-footer> </app-footer>

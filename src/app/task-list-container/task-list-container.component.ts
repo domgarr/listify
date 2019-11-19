@@ -17,7 +17,7 @@ export class TaskListContainerComponent implements OnInit {
   }
 
   ngOnInit() {
-     this.taskListService.getAllTaskListByUserId(1).subscribe((taskLists) => this.test(taskLists, this.tasksLists));
+     this.taskListService.getAllTaskLists().subscribe((taskLists) => this.test(taskLists, this.taskLists));
      console.log("container: " + this.taskLists);
   }
 
@@ -31,7 +31,7 @@ export class TaskListContainerComponent implements OnInit {
     jsonTask.forEach((taskList) => {
     //  console.log(taskList);
       let tmp = new TaskList();
-      tmp.taskListId = taskList.listId;
+      tmp.listId = taskList.listId;
       tmp.userId = taskList.userId;
       tmp.name = taskList.name;
       tmp.tasks = taskList.tasks;
@@ -43,6 +43,20 @@ export class TaskListContainerComponent implements OnInit {
     console.log("container: " + this.taskLists);
 
   //  console.log(taskLists);
+  }
+
+  onNewTaskListAdded(newTaskList : TaskList){
+    this.taskLists.push(newTaskList);
+  }
+
+  onDeleteTaskList(listIdToDelete){
+    console.log("In onDeleteTaskList");
+    console.log(listIdToDelete);
+    let existingTaskList = this.taskLists.find(taskList => listIdToDelete === taskList.listId);
+    console.log(existingTaskList);
+    let index = this.taskLists.indexOf(existingTaskList);
+    console.log(index);
+    this.taskLists.splice(index, 1);
   }
 
 
