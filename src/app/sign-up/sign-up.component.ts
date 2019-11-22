@@ -26,7 +26,7 @@ export class SignUpComponent implements OnInit {
     let credentials = {"username":formSignUp.value.email, "password":formSignUp.value.password};
 
     if(formSignUp.value.password === formSignUp.value.confirmedPassword){
-      this.loginService.signUp(credentials).subscribe(this.signUpHandler());
+      this.loginService.signUp(credentials).subscribe(() => this.signUpHandler());
     }else{
       this.passwordMatchError = true;
     }

@@ -17,7 +17,7 @@ export class TaskListComponent implements OnInit {
 
    editingTaskListName = false;
 
-   isDoneBatch = [];
+   isDoneBatch : Task[]  = [];
 
     @Input() taskList : TaskList;
     @ViewChild('inputTaskListName', {static:false}) inputTaskListName : ElementRef;

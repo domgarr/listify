@@ -53,8 +53,7 @@ export class TaskService {
     and spread/copy over to our instanace obj of httpOptions local only to this function.
     */
     let httpOptions = {...this.httpOptions};
-
-    httpOptions.observe = "response";
+    httpOptions.headers.set('observe', 'response');
     console.log(httpOptions);
     return this.http.delete<any>(this.taskUrl + "/" + id, httpOptions);
   }
@@ -63,11 +62,11 @@ export class TaskService {
   the task already existing in the db and request that the existing task be modifed. whilst
   PATCH the existing resource (Task) should be modified to produce a new version.
   */
-  updateTask(task : Task) : void{
+  updateTask(task : Task) : Observable<any>{
     return this.http.put(this.taskUrl, task, this.httpOptions);
   }
 
-  batchUpdateTaskDone(tasks: Task[]) : void {
+  batchUpdateTaskDone(tasks: Task[]) : Observable<any> {
     return this.http.put(this.taskUrl + '/' + "is-done", tasks, this.httpOptions);
   }
 }

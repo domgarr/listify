@@ -28,7 +28,7 @@ export class TaskListService {
     return this.http.get<TaskList[]>(this.taskListUrl,this.httpOptions);
   }
 
-  updateTaskListName(taskList : TaskList): Observable<any> {
+  updateTaskListName(taskList : object): Observable<any> {
     return this.http.put(this.taskListUrl, taskList, this.httpOptions);
   }
 

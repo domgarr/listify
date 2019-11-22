@@ -11,7 +11,7 @@ import { LoginService } from '../login.service';
 })
 export class HeaderComponent implements OnInit {
 
-  private username : String;
+  username : string;
   @Input() renderMenu: boolean;
 
   constructor(private router : Router, private loginService : LoginService) {
@@ -22,8 +22,12 @@ export class HeaderComponent implements OnInit {
     let tokenCheck = localStorage.getItem("id_token");
     if(tokenCheck != null){
     this.renderMenu = true;
-    this.loginService.getUsername().subscribe((obj)=> this.username = obj.username );
+    this.loginService.getUsername().subscribe((json)=> this.extractUsername(json)  );
     }
+  }
+
+  extractUsername(json){
+    this.username = json.username
   }
 
   logout(){
