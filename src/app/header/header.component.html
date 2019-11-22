@@ -4,7 +4,7 @@
       <h3 (click)="onTitleClick()"> Listify </h3>
     </div>
 
-    <div *ngIf="renderMenu" ngbDropdown  ngbDropdown display="dynamic" placement="bottom-right" class = "col-sm-2 col-md-2 col-lg-2 d-inline-block float-right text-center">
+    <div *ngIf="loggedIn" ngbDropdown  ngbDropdown display="dynamic" placement="bottom-right" class = "col-sm-2 col-md-2 col-lg-2 d-inline-block float-right text-center">
       Welcome {{username}}
       <i class = "material-icons" id="menuItems" ngbDropdownToggle>account_circle</i>
       <div ngbDropdownMenu aria-labelled="menuItems">

@@ -1,8 +1,6 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit, Input, ChangeDetectorRef } from '@angular/core';
 import { Router } from '@angular/router';
 import { LoginService } from '../login.service';
-
-
 
 @Component({
   selector: 'app-header',
@@ -12,26 +10,33 @@ import { LoginService } from '../login.service';
 export class HeaderComponent implements OnInit {
 
   username : string;
-  @Input() renderMenu: boolean;
+  @Input() loggedIn: boolean = false;
 
-  constructor(private router : Router, private loginService : LoginService) {
-    this.renderMenu = false;
+  constructor(private router : Router, private loginService : LoginService, private ref : ChangeDetectorRef) {
   }
 
   ngOnInit() {
-    let tokenCheck = localStorage.getItem("id_token");
-    if(tokenCheck != null){
-    this.renderMenu = true;
-    this.loginService.getUsername().subscribe((json)=> this.extractUsername(json)  );
+  }
+
+  renderMenu(){
+    console.log("renderMneu called");
+    let token = localStorage.getItem("id_token");
+    if(token != null){
+      this.loginService.getUsername().subscribe((json)=> this.extractUsername(json)  );
+      this.loggedIn = true;
+      this.ref.detectChanges();
     }
   }
 
   extractUsername(json){
+    if(json.username){
     this.username = json.username
+    }
   }
 
   logout(){
     localStorage.removeItem("id_token");
+    this.loggedIn = false;
     this.router.navigateByUrl('/login');
   }
 

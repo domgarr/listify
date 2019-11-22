@@ -2,8 +2,6 @@ import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import {Observable, of} from 'rxjs';
 
-
-
 @Injectable({
   providedIn: 'root'
 })
@@ -15,15 +13,13 @@ export class LoginService {
 
   readonly httpOptions = {
     headers: new HttpHeaders({
-      'Content-Type':  'application/json',
-      'Authorization': localStorage.getItem("id_token"),
-      observe:'response'
+      'Content-Type':  'application/json'
     })
   };
 
   constructor(private http : HttpClient) { }
 
-  authenticate(credentials){
+  authenticate(credentials) : Observable<any>{
 
     let params = new HttpParams()
       .set("username", credentials.email)
@@ -34,11 +30,18 @@ export class LoginService {
     return this.http.post('http://localhost:8080/login',{}, {params:params, observe:'response'});
   }
 
-  signUp(credentials){
-    return this.http.post(this.signUpUrl, credentials);
+  signUp(credentials) : Observable<any>{
+    return this.http.post(this.signUpUrl, credentials, {observe : 'response'});
   }
 
-  getUsername() : Observable<string>{
-    return this.http.get<string>(this.usernameUrl, this.httpOptions);
+  getUsername() : Observable<String>{
+    let httpOptions = {
+      headers: new HttpHeaders({
+        'Content-Type':  'application/json',
+        'Authorization': localStorage.getItem("id_token")
+      })
+    };
+
+    return this.http.get<string>(this.usernameUrl, httpOptions);
   }
 }

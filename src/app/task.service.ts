@@ -1,3 +1,5 @@
+//Unsubscring from HTTP observables is not requried NG2 will cleanup
+//https://stackoverflow.com/questions/35042929/is-it-necessary-to-unsubscribe-from-observables-created-by-http-methods
 import { Injectable } from '@angular/core';
 /*
   HttpClient requests returns rxjs Objservable
@@ -54,7 +56,6 @@ export class TaskService {
     */
     let httpOptions = {...this.httpOptions};
     httpOptions.headers.set('observe', 'response');
-    console.log(httpOptions);
     return this.http.delete<any>(this.taskUrl + "/" + id, httpOptions);
   }
 

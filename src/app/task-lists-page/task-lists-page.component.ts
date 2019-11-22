@@ -1,5 +1,6 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild} from '@angular/core';
 import { Router } from '@angular/router';
+import {HeaderComponent} from '../header/header.component';
 
 @Component({
   selector: 'app-task-lists-page',
@@ -8,14 +9,22 @@ import { Router } from '@angular/router';
 })
 export class TaskListsPageComponent implements OnInit {
 
-  jwt : String;
+  jwt : string;
+ @ViewChild('header', {static:false}) header;
 
-  constructor(private router: Router) { }
+  constructor(private router: Router) {
+ }
 
-  ngOnInit() {
+ ngOnInit(){
+
+ }
+
+ngAfterViewInit() {
     this.jwt = localStorage.getItem("id_token");
     if(this.jwt == null){
       this.router.navigateByUrl('/login');
+    }else{
+      this.header.renderMenu();
     }
   }
 

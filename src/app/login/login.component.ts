@@ -15,11 +15,9 @@ import {NgForm} from '@angular/forms';
 export class LoginComponent {
 
   error : boolean;
-  renderMenu : boolean;
 
   constructor(private loginService: LoginService, private router : Router) {
     this.error = false;
-    this.renderMenu = false;
   }
 
 //  this.router.navigateByUrl('/');
@@ -38,7 +36,6 @@ export class LoginComponent {
       case 200 :
         console.log(response.headers.get("Authorization"));
         localStorage.setItem("id_token", response.headers.get("Authorization"));
-        this.renderMenu = true;
         this.router.navigateByUrl('/task-lists-page');
         break;
       default:
