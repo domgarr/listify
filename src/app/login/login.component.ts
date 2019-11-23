@@ -36,7 +36,7 @@ export class LoginComponent {
       case 200 :
         console.log(response.headers.get("Authorization"));
         localStorage.setItem("id_token", response.headers.get("Authorization"));
-        this.router.navigateByUrl('/task-lists-page');
+        this.router.navigateByUrl('/task-lists-page', { skipLocationChange: true });
         break;
       default:
         console.log("Status not mapped");

@@ -25,15 +25,21 @@ export class TaskListService {
   }
 
   getAllTaskLists() : Observable<TaskList[]> {
-    return this.http.get<TaskList[]>(this.taskListUrl,this.httpOptions);
+    return this.http.get<TaskList[]>(this.taskListUrl, this.httpOptions);
   }
 
   updateTaskListName(taskList : object): Observable<any> {
-    return this.http.put(this.taskListUrl, taskList, this.httpOptions);
+    return this.http.put(this.taskListUrl, taskList, this.httpOptionsIncludingObserveResponse());
   }
 
   deleteTaskList(listId): Observable<any>  {
-    return this.http.delete(this.taskListUrl + '/' + listId, this.httpOptions);
+    return this.http.delete(this.taskListUrl + '/' + listId,  this.httpOptionsIncludingObserveResponse());
+  }
+
+  httpOptionsIncludingObserveResponse() : object {
+    let instanceHttpOptions = {...this.httpOptions};
+    instanceHttpOptions.observe = 'response';
+    return instanceHttpOptions;
   }
 
 }

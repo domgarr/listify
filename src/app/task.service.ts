@@ -68,6 +68,7 @@ export class TaskService {
   }
 
   batchUpdateTaskDone(tasks: Task[]) : Observable<any> {
+    console.log("Batch: " + tasks);
     return this.http.put(this.taskUrl + '/' + "is-done", tasks, this.httpOptions);
   }
 }
