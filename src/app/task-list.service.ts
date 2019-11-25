@@ -38,7 +38,7 @@ export class TaskListService {
 
   httpOptionsIncludingObserveResponse() : object {
     let instanceHttpOptions = {...this.httpOptions};
-    instanceHttpOptions.observe = 'response';
+    instanceHttpOptions['observe'] = 'response'; //This should not be an error. It's correct syntax. 
     return instanceHttpOptions;
   }
 
