@@ -55,7 +55,7 @@ export class TaskService {
     and spread/copy over to our instanace obj of httpOptions local only to this function.
     */
     let httpOptions = {...this.httpOptions};
-    httpOptions.headers.set('observe', 'response');
+    httpOptions['observe'] = 'response' ;
     return this.http.delete<any>(this.taskUrl + "/" + id, httpOptions);
   }
 

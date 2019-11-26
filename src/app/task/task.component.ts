@@ -36,6 +36,12 @@ export class TaskComponent implements OnInit {
 
   //When enter is pressed whilst focused on inputTask, update the existing task.
   onEnterPressed(taskValue){
+    let taskValueTrimmed = taskValue;
+    //If task value is editted and left empty, delete the task.
+    if(taskValueTrimmed == ""){
+      this.onDeletePressed();
+      return;
+    }
     // Lose focus and just show the paragraph.
     this.focusOffInput();
     if(taskValue.localeCompare(this.task.description) != 0 ){
