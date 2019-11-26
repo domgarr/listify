@@ -16,11 +16,12 @@ export class SignUpComponent implements OnInit {
   signUpForm : FormGroup;
 
   constructor(private loginService : LoginService, private router : Router) {
-  this.error = false;
-  this.passwordMatchError = false;
+  this.error = false; //General error
+  this.passwordMatchError = false; //Error indicating password and confirmedPassword do not match.
 }
   //Init the formGroup that takes care of dynamic form validation.
   ngOnInit() {
+    //Here we init the form controls to dynamically validate the form.
     this.signUpForm = new FormGroup({
       email : new FormControl('', [Validators.required, Validators.minLength(3), Validators.maxLength(256), Validators.email]),
       password : new FormControl('', [Validators.required, Validators.minLength(8), Validators.maxLength(256)]),
@@ -38,11 +39,13 @@ export class SignUpComponent implements OnInit {
         (err) =>this.signUpErrorHandler(err)
       );
     }else{
-      this.passwordMatchError = true;
+      this.passwordMatchError = true; //Setting this true will render an error message.
     }
   }
 
   signUpHandler(){
+    /* Upon creating a user successfully direct the user to the login page.
+    NOTE: skipLocationChange is not hiding the URL */
     this.router.navigateByUrl("/login", { skipLocationChange: true });
   }
 
@@ -50,7 +53,7 @@ export class SignUpComponent implements OnInit {
   signUpErrorHandler(err){
 
   }
-
+  //Helpers used in the HTML document for easy access.
   get email(){return this.signUpForm.get('email');}
   get password(){return this.signUpForm.get('password');}
   get confirmedPassword(){return this.signUpForm.get('confirmedPassword');}

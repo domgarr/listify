@@ -25,7 +25,6 @@ export class NewTaskComponent implements OnInit {
   }
 
   ngOnChanges(chg){
-    console.log(chg);
   }
 
   ngOnInit() {

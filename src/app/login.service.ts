@@ -42,7 +42,6 @@ export class LoginService {
         'Authorization': localStorage.getItem("id_token")
       })
     };
-
     return this.http.get<string>(this.usernameUrl, httpOptions);
   }
 }

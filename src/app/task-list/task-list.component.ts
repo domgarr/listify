@@ -1,4 +1,5 @@
 import { Component, OnInit,OnDestroy, Input, ElementRef, ChangeDetectorRef,HostListener, ViewChild, Output, EventEmitter} from '@angular/core';
+
 import {Task} from '../models/task';
 import {TaskList} from '../models/task-list';
 import {TaskService} from '../task.service';
@@ -11,9 +12,9 @@ import {TaskListService} from '../task-list.service';
 })
 export class TaskListComponent implements OnInit {
 
-   editingTaskListName = false;
+   editingTaskListName = false; //Controls if input element for editing TaskListName is rendered or not.
 
-   isDoneBatch : Task[]  = [];
+   isDoneBatch : Task[]  = []; //Used for holding Task models which were clicked denoting is_done as true or complete.
 
     @Input() taskList : TaskList; //The taskList is a @Input because the parent component feeds it a  taskList object
     /*
@@ -26,7 +27,6 @@ export class TaskListComponent implements OnInit {
   Upon instantiation Angular will use its DI system to set taskservice to a singleton instance of taskservice.
 */
   constructor(private ref : ChangeDetectorRef, private taskService: TaskService, private taskListService: TaskListService) {
-    console.log("TaskList: " + this.taskList);
    }
 /*
   Upon refreshing or closing the browser make a request to update all tasks that were completed.
@@ -96,14 +96,13 @@ export class TaskListComponent implements OnInit {
       The endpoint expects a TaskList model, but we should only have to pass ID and new Tasklist Name to get the job done.
     */
     reqTaskList.tasks = [];
-
+    //Wait for a status 200 OK response from the server until changing the tasklist name
     this.taskListService.updateTaskListName(reqTaskList).subscribe((response) =>{
       if(response.status === 200){
         this.taskList.name = newTaskListName ;
       }
     });
-
-    this.editingTaskListName = false;
+    this.editingTaskListName = false; //By setting this value to false *ngIf on the input element becomes false and is not rendered anymore.
   }
 
   onEditTaskListName(){
@@ -116,6 +115,8 @@ export class TaskListComponent implements OnInit {
     this.editingTaskListName = false;
   }
 
+  //TODO: Add a confirmation before deleting the entire list.
+  //Delete the entire TaskList once the server responds with an OK status.
   onDeleteTaskList(){
     this.taskListService.deleteTaskList(this.taskList.listId).subscribe( response => {
       if(response.status === 200){
@@ -124,6 +125,12 @@ export class TaskListComponent implements OnInit {
     });
   }
 
+  /* When a Task is complete, that is when the user clicks on it and renders green
+  the Task is pushed to an array. When the user refreshes or exits the application
+  a batch request will be made to the server updating the is_done field for all tasks
+  mutated. I believe this is the correct decision as a user could simply spam click the
+  task. This is a more efficient solution. */
+
   onDoneTask(task : Task){
     //Check if task is already added to the batch array.
     if(this.checkIfCompletedTaskIsInBatchArray(task.id)){
@@ -131,7 +138,6 @@ export class TaskListComponent implements OnInit {
     }else{
       this.isDoneBatch.push(task);
     }
-    console.log(this.isDoneBatch);
   }
 
   //Returns an object if a task exists in the batch array else returns undefined.

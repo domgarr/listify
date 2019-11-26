@@ -1,6 +1,6 @@
 import { Component, OnInit,OnChanges, Input, Output, EventEmitter, ViewChild, ElementRef, ChangeDetectorRef} from '@angular/core';
-import {Task} from '../models/task';
 
+import {Task} from '../models/task';
 import {TaskService} from '../task.service';
 
 @Component({
@@ -10,13 +10,12 @@ import {TaskService} from '../task.service';
 })
 export class TaskComponent implements OnInit {
 
-  @Input() task : Task;
+  @Input() task : Task; //task-List component will provide this model.
   @Output() editedTask = new EventEmitter<Task>(); //An event consumed by tasklist componenet.
   @Output() deleteTask = new EventEmitter<Task>(); //An event consumed by tasklist componenet.
   @Output() doneTask = new EventEmitter<Task>(); //An event consumed by tasklist componenet.
 
-
-  defaultCardTaskClasses : string = "task mb-3 mt-3";
+  defaultCardTaskClasses : string = "task mb-3 mt-3"; //Default styling. On init we will set this as the dafult.
   cardTaskClasses : string;
 
   renderInputTask : boolean; //Used for controlling the rendering of task or editTask. When false, the edit option is not rendered.
@@ -44,21 +43,22 @@ export class TaskComponent implements OnInit {
     }
     // Lose focus and just show the paragraph.
     this.focusOffInput();
+    //If the previous and current value is left untouched do not update the task.
     if(taskValue.localeCompare(this.task.description) != 0 ){
       this.task.description = taskValue;
       this.taskService.updateTask(this.task).subscribe((response) => {
-        console.log(response);
         this.editedTask.emit(this.task);
       })
     }
   }
 
+  //Will delete a task if the delete icon is pressed.
   onDeletePressed(){
-    console.log("onDelte: " + this.task.id);
     this.taskService.deleteTask(this.task.id).subscribe((response) => this.deleteStatusCheck(response));
   }
 
   deleteStatusCheck(response){
+    //Checking is the server responds with an OK status before displaying on the view that it was deleted.
     if(response.status === 200){
       this.deleteTask.emit(this.task);
     }
@@ -67,7 +67,6 @@ export class TaskComponent implements OnInit {
   //Called when the edit icon is clicked next to a task.
   onEdit(){
     this.focusOnInput();
-
     /*
      After focusOnInput() is called, the input is rendered. Prior to this the input is undefined.
     detectChanges() will check the component for any new rendered views. This is action is needed
@@ -92,13 +91,15 @@ export class TaskComponent implements OnInit {
    this.renderInputTask = false;
   }
 
+  //When a user clicks on the task it turns green and updates the is_done field to 1 as complete.
   onDone(ref){
-    this.task.isDone = !this.task.isDone;
+    this.task.isDone = !this.task.isDone; //Set the value of isDone to be opposite of it's previous value.
     this.cardBackgroundColorChange();
-    this.doneTask.emit(this.task);
+    this.doneTask.emit(this.task); //An event consumed by task-list component.
   }
 
   cardBackgroundColorChange(){
+    //Depending on if the task is pressed denoting done, will determine the color of the card background.
     if(this.task.isDone){
       this.cardTaskClasses = this.cardTaskClasses.replace("task","green");
     }else{

@@ -19,7 +19,6 @@ export class HeaderComponent implements OnInit {
   }
 
   renderMenu(){
-    console.log("renderMneu called");
     let token = localStorage.getItem("id_token");
     if(token != null){
       this.loginService.getUsername().subscribe((json)=> this.extractUsername(json)  );
@@ -30,7 +29,7 @@ export class HeaderComponent implements OnInit {
 
   extractUsername(json){
     if(json.username){
-    this.username = json.username
+      this.username = json.username
     }
   }
 
@@ -40,6 +39,7 @@ export class HeaderComponent implements OnInit {
     this.router.navigateByUrl('/login');
   }
 
+  //TODO: Users cursor should change when hovering over Listify title to indicate it's clickable.
   onTitleClick(){
     this.router.navigateByUrl('/login');
   }

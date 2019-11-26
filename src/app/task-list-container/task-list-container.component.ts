@@ -17,45 +17,34 @@ export class TaskListContainerComponent implements OnInit {
   }
 
   ngOnInit() {
-     this.taskListService.getAllTaskLists().subscribe((taskLists) => this.test(taskLists, this.taskLists));
-     console.log("container: " + this.taskLists);
+    //Get all TaskLists assoicated with the user.
+     this.taskListService.getAllTaskLists().subscribe((taskLists) => this.populateTaskListWithTasks(taskLists, this.taskLists));
   }
 
-  tester(taskLists){
-    console.log(taskLists);
-  }
-
-  test(jsonTask, taskLists) {
-  //  console.log(this);
-  //  console.log(jsonTask);
+  /* This method will populate TaskList array with TaskLists fetched from the server
+  two parameters are given. The json response holding the TaskList object and an empty TaskList array
+  that our application uses to store the users TaskLists */
+  populateTaskListWithTasks(jsonTask, taskLists) {
+    //Run the Json object literal through a stream creating a TaskList model and populating the values;
     jsonTask.forEach((taskList) => {
-    //  console.log(taskList);
       let tmp = new TaskList();
       tmp.listId = taskList.listId;
       tmp.userId = taskList.userId;
       tmp.name = taskList.name;
       tmp.tasks = taskList.tasks;
 
-      //console.log(tmp);
-
       this.taskLists.push(tmp);
     });
-    console.log("container: " + this.taskLists);
-
-  //  console.log(taskLists);
   }
 
+  //An event will call this method when the user deletes a TaskList.
   onNewTaskListAdded(newTaskList : TaskList){
     this.taskLists.push(newTaskList);
   }
 
   onDeleteTaskList(listIdToDelete){
-    console.log("In onDeleteTaskList");
-    console.log(listIdToDelete);
     let existingTaskList = this.taskLists.find(taskList => listIdToDelete === taskList.listId);
-    console.log(existingTaskList);
     let index = this.taskLists.indexOf(existingTaskList);
-    console.log(index);
     this.taskLists.splice(index, 1);
   }
 

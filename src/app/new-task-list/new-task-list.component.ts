@@ -27,10 +27,10 @@ export class NewTaskListComponent implements OnInit {
   }
 
   onEdit(){
+    //See comments in task component.
     this.renderInput = true;
     this.ref.detectChanges();
     this.inputTaskListName.nativeElement.focus();
-
   }
 
   onEnterPressed(taskListName){

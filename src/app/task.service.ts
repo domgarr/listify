@@ -46,7 +46,6 @@ export class TaskService {
 
   saveTask(newTask : Task) : Observable<Task> {
     //TODO: Add error handling.
-    console.log(this.httpOptions);
     return this.http.post<Task>(this.taskUrl, newTask, this.httpOptions);
   }
 
@@ -68,7 +67,6 @@ export class TaskService {
   }
 
   batchUpdateTaskDone(tasks: Task[]) : Observable<any> {
-    console.log("Batch: " + tasks);
     return this.http.put(this.taskUrl + '/' + "is-done", tasks, this.httpOptions);
   }
 }
