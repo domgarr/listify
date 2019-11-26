@@ -38,10 +38,16 @@ export class NewTaskComponent implements OnInit {
   }
 
   onEnterPressed(value){
+    let trimmedValue = value.trim();
+    //If enter is pressed and nothing is entered. Focus off input and return.
+    if(trimmedValue === ""){
+      this.focusOffInputTask();
+      return;
+    }
     //Create new task
     let task = new Task();
     task.listId = this.listId;
-    task.description = value.trim();
+    task.description = trimmedValue;
     task.isDone = false;
 
     //Make call to DB to add new task.
@@ -49,7 +55,6 @@ export class NewTaskComponent implements OnInit {
     //Add returned object to the existing array.
     //Set textbox to empty
     this.description = "";
-    console.log(this);
     }
 
     onClickAddIcon(){

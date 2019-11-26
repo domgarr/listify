@@ -47,7 +47,7 @@ export class SignUpComponent implements OnInit {
   }
 
   //TODO:
-  signUpErrorHandler(){
+  signUpErrorHandler(err){
 
   }
 
