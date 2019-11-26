@@ -37,7 +37,7 @@ export class NewTaskListComponent implements OnInit {
     //Check if taskListName is not empty.
     if(taskListName){
       let taskList = new TaskList();
-      taskList.name = taskListName;
+      taskList.name = taskListName.trim();
       //Call a service to add a new Task listTaskId
       this.taskListService.saveTaskList(taskList).subscribe((newTaskList) => this.newTaskList.emit(newTaskList));
       //Clear taskListName to an empty string to resuse component for adding new Task list in the future.

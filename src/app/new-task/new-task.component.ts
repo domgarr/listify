@@ -38,15 +38,11 @@ export class NewTaskComponent implements OnInit {
   }
 
   onEnterPressed(value){
-    console.log(value);
-    //TODO: Rename Todo to Task
     //Create new task
     let task = new Task();
     task.listId = this.listId;
-    task.description = value;
+    task.description = value.trim();
     task.isDone = false;
-
-    console.log(task);
 
     //Make call to DB to add new task.
     this.taskService.saveTask(task).subscribe(task => this.newTaskAdded.emit(task));
