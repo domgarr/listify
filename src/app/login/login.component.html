@@ -4,13 +4,40 @@
 	<div class = "col-sm-6 col-md-6 col-lg-6 " >
 		<mat-card class="p-5">
 			<mat-card-content>
-					<div class="alert alert-danger" [hidden]="!error">
-						There was a problem logging in. Please try again.
+					<div class="alert alert-danger" [hidden]="!error" >
+						{{errorMessage}}
 					</div>
-					<form #f="ngForm" class="form-signin" (ngSubmit)="onSubmit(f)">
-						<input type="email" name="email"  class="form-control" placeholder="Username" required autofocus ngModel>
-						<input id="inputPassword" type="password" name="password"  class="form-control" placeholder="Password" required ngModel>
-						<button class="btn btn-lg btn-primary btn-block">Sign in</button>
+					<form class="form-signin" [formGroup]="loginForm" (ngSubmit)="onSubmit()" >
+						<input formControlName="email" type="email" id="email"  class="form-control" placeholder="billy@gmail.com" autofocus required>
+						<div *ngIf="email.invalid && (email.dirty ||email.touched)" class="alert alert-danger">
+							<div *ngIf="email.errors.required">
+								E-mail is required.
+							</div>
+							<div *ngIf="email.errors.minlength">
+	  					  E-mail must be at least 3 characters long.
+	  					</div>
+							<div *ngIf="email.errors.maxlength">
+								E-mail must not exceed 256 characters long.
+							</div>
+							<div *ngIf="email.errors.email">
+								Incorrect e-mail format entered.
+							</div>
+						</div>
+
+						<input formControlName="password" id="password" type="password" class="form-control" placeholder="password" required>
+						<div *ngIf="password.invalid && (password.dirty ||password.touched)" class="alert alert-danger">
+							<div *ngIf="password.errors.required">
+								Password is required.
+							</div>
+							<div *ngIf="password.errors.minlength">
+								Password must be at least 8 characters long.
+							</div>
+							<div *ngIf="password.errors.maxlength">
+								Password must not exceed 256 characters long.
+							</div>
+						</div>
+
+						<button type="submit" class="btn btn-lg btn-primary btn-block" [disabled]="!loginForm.valid">Sign in</button>
 					</form>
 					<a class="lead float-right m-2" href="/sign-up"> Sign up here </a>
 			</mat-card-content>

@@ -1,10 +1,9 @@
 import { Component, OnInit } from '@angular/core';
-import { LoginService } from '../login.service';
 import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { Router } from '@angular/router';
-import {NgForm} from '@angular/forms';
+import {NgForm, FormBuilder, Validators, FormGroup, FormControl } from '@angular/forms';
 
-
+import { LoginService } from '../login.service';
 
 @Component({
   selector: 'app-login',
@@ -15,43 +14,58 @@ import {NgForm} from '@angular/forms';
 export class LoginComponent {
 
   error : boolean;
+  errorMessage : string;
+  loginForm : FormGroup;
 
   constructor(private loginService: LoginService, private router : Router) {
     this.error = false;
+    this.errorMessage = "";
   }
 
-//  this.router.navigateByUrl('/');
+  ngOnInit(){
+    //Here is an example of reactive form validation
+    this.loginForm = new FormGroup({
+      email : new FormControl('',[Validators.required, Validators.minLength(3), Validators.maxLength(256), Validators.email]),
+      password : new FormControl('', [Validators.required, Validators.minLength(8), Validators.maxLength(256)])
+    });
+  }
 
-  onSubmit(f : NgForm){
-    console.log(f.value);
-    this.loginService.authenticate(f.value).subscribe(
-      response => this.loginHandler(response),
+  onSubmit(){
+    //The FormGroup loginForm stores the values.
+    this.loginService.authenticate(this.loginForm.value).subscribe(
+      response => this.loginSuccessHandler(response),
       error => this.loginErrorHandler(error)
       );
   }
 
-  loginHandler(response){
-    console.log(response);
+  loginSuccessHandler(response){
     switch(response.status){
       case 200 :
-        console.log(response.headers.get("Authorization"));
+        //Upon a successful login the db returns a token and it's saved into localStorage
+        //where it will be used to authenticate a user.
         localStorage.setItem("id_token", response.headers.get("Authorization"));
+        //After a successful login to go the main page of the app
         this.router.navigateByUrl('/task-lists-page', { skipLocationChange: true });
         break;
       default:
-        console.log("Status not mapped");
     }
   }
 
    loginErrorHandler(error : HttpErrorResponse){
-     console.log("Cuahgt");
-     console.log(error);
+    this.error = true;
      switch(error.status){
-       case 403 : this.error = true;
+       case 403 : this.errorMessage = "Incorrect username or password entered.";
          break;
+       case 0: this.errorMessage = "There seems to be an error on our end. Please try again later.";
+        break;
        default:
-         console.log("Status not mapped");
+
      }
    }
+
+//Check the html component code which use getters so that we don't have to reference the object.
+get email() { return this.loginForm.get('email'); }
+
+get password() { return this.loginForm.get('password'); }
 
 }

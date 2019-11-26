@@ -22,6 +22,7 @@ import { TaskListsPageComponent } from './task-lists-page/task-lists-page.compon
 import {NgbModule} from '@ng-bootstrap/ng-bootstrap';
 import { FooterComponent } from './footer/footer.component';
 import { SignUpComponent } from './sign-up/sign-up.component';
+import { ReactiveFormsModule } from '@angular/forms';
 
 
 const routes: Routes = [
@@ -68,7 +69,8 @@ export class XhrInterceptor implements HttpInterceptor {
     MatGridListModule,
     FormsModule,
     RouterModule.forRoot(routes),
-    NgbModule
+    NgbModule,
+    ReactiveFormsModule
   ],
   providers: [LoginService, { provide: HTTP_INTERCEPTORS, useClass: XhrInterceptor, multi: true }],
   bootstrap: [AppComponent]
