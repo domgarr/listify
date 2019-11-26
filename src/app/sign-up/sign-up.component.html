@@ -9,11 +9,50 @@
           <div class="alert alert-danger" [hidden]="!passwordMatchError">
             The password and confirmed passwords do not match.
           </div>
-					<form #formSignup="ngForm" class="form-signin" (ngSubmit)="onSubmit(formSignup)">
-						<input type="email" name="email"  class="form-control m-1" placeholder="Username" required autofocus ngModel>
-						<input id="inputPassword" type="password" name="password"  class="form-control m-1" placeholder="Password" required ngModel>
-            <input id="inputConfirmedPassword" type="password" name="confirmedPassword"  class="form-control m-1" placeholder="Confirm Password" required ngModel>
-            <button class="btn btn-lg btn-primary btn-block">Sign up</button>
+					<form  class="form-signin" [formGroup]="signUpForm" (ngSubmit)="onSubmit()">
+						<input formControlName="email" type="email" id="email"  class="form-control m-1" placeholder="Username" required autofocus>
+						<div *ngIf="email.invalid && (email.dirty ||email.touched)" class="alert alert-danger">
+							<div *ngIf="email.errors.required">
+								E-mail is required.
+							</div>
+							<div *ngIf="email.errors.minlength">
+	  					  E-mail must be at least 3 characters long.
+	  					</div>
+							<div *ngIf="email.errors.maxlength">
+								E-mail must not exceed 256 characters long.
+							</div>
+							<div *ngIf="email.errors.email">
+								Incorrect e-mail format entered.
+							</div>
+						</div>
+
+						<input formControlName="password" id="password" type="password" class="form-control m-1" placeholder="Password" required>
+						<div *ngIf="password.invalid && (password.dirty ||password.touched)" class="alert alert-danger">
+							<div *ngIf="password.errors.required">
+								Password is required.
+							</div>
+							<div *ngIf="password.errors.minlength">
+								Password must be at least 8 characters long.
+							</div>
+							<div *ngIf="password.errors.maxlength">
+								Password must not exceed 256 characters long.
+							</div>
+						</div>
+
+						<input formControlName="confirmedPassword" id="confirmedPassword" type="password" class="form-control m-1" placeholder="Confirm Password" required>
+						<div *ngIf="confirmedPassword.invalid && (confirmedPassword.dirty ||confirmedPassword.touched)" class="alert alert-danger">
+							<div *ngIf="confirmedPassword.errors.required">
+								Password is required.
+							</div>
+							<div *ngIf="confirmedPassword.errors.minlength">
+								Password must be at least 8 characters long.
+							</div>
+							<div *ngIf="confirmedPassword.errors.maxlength">
+								Password must not exceed 256 characters long.
+							</div>
+						</div>
+
+						<button class="btn btn-lg btn-primary btn-block" [disabled]="!signUpForm.valid">Sign up</button>
 					</form>
 			</mat-card-content>
 		</mat-card>

@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { HttpClient, HttpErrorResponse } from '@angular/common/http';
-import { Router } from '@angular/router';
+import { Router, NavigationExtras } from '@angular/router';
 import {NgForm, FormBuilder, Validators, FormGroup, FormControl } from '@angular/forms';
 
 import { LoginService } from '../login.service';
