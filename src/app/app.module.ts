@@ -26,12 +26,11 @@ import { ReactiveFormsModule } from '@angular/forms';
 
 
 const routes: Routes = [
-  { path: '', pathMatch: 'full', redirectTo: 'home'},
-  { path: 'home', component: AppComponent},
+
   { path: 'login', component: LoginComponent},
-  { path: 'task-lists-page', component: TaskListsPageComponent},
+  { path: 'home', component: TaskListsPageComponent},
   { path: 'sign-up', component: SignUpComponent},
-  {path: "**", component: AppComponent}
+  { path: '**', pathMatch: 'full', redirectTo: 'home'}
 ];
 
 @Injectable()
