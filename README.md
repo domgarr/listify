@@ -50,3 +50,12 @@ Finally create the tables using the provided sql script in resource. I used Mysq
 ## known bugs
 * Clicking on the delete icon highlights the task before deleting.
 * Users can fake a JWT and access any page they want on the front-end but they won't be able to access the database.
+
+## acknowledgements
+How to deploy an angular/java spring application to heroku
+https://dasunpubudu.wordpress.com/2018/04/17/deploying-spring-angular-mast-stack-application-in-heroku/
+
+Tutorial used for securing endpoints with JWT
+https://auth0.com/blog/implementing-jwt-authentication-on-spring-boot/#User-Authentication-and-Authorization-on-Spring-Boot
+
+
