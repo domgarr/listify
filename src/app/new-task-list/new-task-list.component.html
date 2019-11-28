@@ -2,7 +2,7 @@
 <div class="card" >
   <div class="card-body" >
     <div (click)="onEdit()" >
-      <div *ngIf="!renderIput"><i class = "material-icons align-middle" >add</i> Add a new list </div>
+      <div *ngIf="!renderInput"><i class = "material-icons align-middle" >add</i> Add a new list </div>
       <mat-form-field *ngIf="renderInput">
         <!-- () denotes event-binding.  a template statement responds to an event - it has a side effect -->
         <input matInput #inputTaskListName placeholder="Adding a new task list..." (keyup.enter) = "onEnterPressed(inputTaskListName.value)"   [value]="taskListName" [name]="taskListName" (focusout)="focusOffInput()" />
