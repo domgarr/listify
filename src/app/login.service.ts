@@ -9,8 +9,8 @@ import {Observable, of} from 'rxjs';
 export class LoginService {
   authenticated = false;
 
-  private signUpUrl = "http://localhost:8080/users/sign-up";
-  private usernameUrl = "http://localhost:8080/users/username";
+  private signUpUrl = "/users/sign-up";
+  private usernameUrl = "/users/username";
 
   constructor(private http : HttpClient) { }
   /*To authenticate we post request to the server with username and password values

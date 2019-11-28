@@ -16,7 +16,7 @@ export class TaskListService {
     })
   };
 
- private readonly taskListUrl = "http://localhost:8080/tasklist";
+ private readonly taskListUrl = "/tasklist";
 
   constructor(private http : HttpClient) { }
 
@@ -38,7 +38,7 @@ export class TaskListService {
 
   httpOptionsIncludingObserveResponse() : object {
     let instanceHttpOptions = {...this.httpOptions};
-    instanceHttpOptions['observe'] = 'response'; //This should not be an error. It's correct syntax. 
+    instanceHttpOptions['observe'] = 'response'; //This should not be an error. It's correct syntax.
     return instanceHttpOptions;
   }
 

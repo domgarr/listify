@@ -13,7 +13,7 @@
         "build": {
           "builder": "@angular-devkit/build-angular:browser",
           "options": {
-            "outputPath": "dist/todo-front",
+            "outputPath": "../../src/main/resources/static",
             "index": "src/index.html",
             "main": "src/main.ts",
             "polyfills": "src/polyfills.ts",
@@ -67,7 +67,8 @@
         "serve": {
           "builder": "@angular-devkit/build-angular:dev-server",
           "options": {
-            "browserTarget": "todo-front:build"
+            "browserTarget": "todo-front:build",
+            "proxyConfig" : "proxy.conf.json"
           },
           "configurations": {
             "production": {

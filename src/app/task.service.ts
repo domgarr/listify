@@ -34,7 +34,7 @@ export class TaskService {
     })
   };
 
-  private readonly taskUrl = 'http://localhost:8080/task'
+  private readonly taskUrl = '/task';
 
   constructor(private http : HttpClient) { }
 
