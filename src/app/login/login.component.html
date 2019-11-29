@@ -39,7 +39,7 @@
 
 						<button type="submit" class="btn btn-lg btn-primary btn-block" [disabled]="!loginForm.valid">Sign in</button>
 					</form>
-					<a class="lead float-right m-2" href="/sign-up"> Sign up here </a>
+					<a class="lead float-right m-2" (click)="onSignUpClick()"> Sign up here </a>
 			</mat-card-content>
 		</mat-card>
 	</div>

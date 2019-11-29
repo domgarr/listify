@@ -68,4 +68,8 @@ get email() { return this.loginForm.get('email'); }
 
 get password() { return this.loginForm.get('password'); }
 
+onSignUpClick(){
+  this.router.navigateByUrl('/sign-up', { skipLocationChange: true });
+}
+
 }

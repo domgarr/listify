@@ -24,7 +24,7 @@ ngAfterViewInit() {
     //TODO: I really should verify this token is correct and not tampered with before moving pages.
     //If null, we direct the user to the login page.
     if(this.jwt == null){
-      this.router.navigateByUrl('/login');
+      this.router.navigateByUrl('user/login');
     }else{
       //If a jwt token is present we can render the user specific menu.
       this.header.renderMenu();

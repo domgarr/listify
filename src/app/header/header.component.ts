@@ -36,12 +36,12 @@ export class HeaderComponent implements OnInit {
   logout(){
     localStorage.removeItem("id_token");
     this.loggedIn = false;
-    this.router.navigateByUrl('/login');
+    this.router.navigateByUrl('user/login');
   }
 
   //TODO: Users cursor should change when hovering over Listify title to indicate it's clickable.
   onTitleClick(){
-    this.router.navigateByUrl('/login');
+    this.router.navigateByUrl('user/login');
   }
 
 }

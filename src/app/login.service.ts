@@ -9,6 +9,7 @@ import {Observable, of} from 'rxjs';
 export class LoginService {
   authenticated = false;
 
+  private loginUrl = "/login";
   private signUpUrl = "/users/sign-up";
   private usernameUrl = "/users/username";
 
@@ -24,7 +25,7 @@ export class LoginService {
     let params = new HttpParams()
       .set("username", credentials.email)
       .set("password", credentials.password);
-    return this.http.post('http://localhost:8080/login',{}, {params:params, observe:'response'});
+    return this.http.post(this.loginUrl,{}, {params:params, observe:'response'});
   }
 
   /* For authenticate and signUp we are subscribing to an event containing the response
