@@ -38,14 +38,22 @@ export class TaskService {
 
   constructor(private http : HttpClient) { }
 
+  //See Task-List Service
+  //Just to be safe, we will mutate the header object containing the auth token every time we make a request.
+  updateHeader(){
+    this.httpOptions.headers = this.httpOptions.headers.set("Authorization", localStorage.getItem("id_token"));
+  }
+
   //Now that getTodos return an observable the difference is adding subscribe.
   getTasks(taskListId : number): Observable<Task[]> {
     //of(TODOS) will return a single value - array of todos
+    this.updateHeader();
     return this.http.get<Task[]>(this.taskUrl + "/" + taskListId, this.httpOptions);
   }
 
   saveTask(newTask : Task) : Observable<Task> {
     //TODO: Add error handling.
+    this.updateHeader();
     return this.http.post<Task>(this.taskUrl, newTask, this.httpOptions);
   }
 
@@ -53,6 +61,7 @@ export class TaskService {
     /* ... is the spread operator. It will take all fields from httpOptions
     and spread/copy over to our instanace obj of httpOptions local only to this function.
     */
+    this.updateHeader();
     let httpOptions = {...this.httpOptions};
     httpOptions['observe'] = 'response' ;
     return this.http.delete<any>(this.taskUrl + "/" + id, httpOptions);
@@ -63,10 +72,12 @@ export class TaskService {
   PATCH the existing resource (Task) should be modified to produce a new version.
   */
   updateTask(task : Task) : Observable<any>{
+    this.updateHeader();
     return this.http.put(this.taskUrl, task, this.httpOptions);
   }
 
   batchUpdateTaskDone(tasks: Task[]) : Observable<any> {
+    this.updateHeader();
     return this.http.put(this.taskUrl + '/' + "is-done", tasks, this.httpOptions);
   }
 }
