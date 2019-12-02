@@ -23,12 +23,19 @@ import {NgbModule} from '@ng-bootstrap/ng-bootstrap';
 import { FooterComponent } from './footer/footer.component';
 import { SignUpComponent } from './sign-up/sign-up.component';
 import { ReactiveFormsModule } from '@angular/forms';
+import {HomeRouterResolverService} from './resolvers/home-router-resolver.service';
 
+// https://stackoverflow.com/questions/41922466/redirect-user-with-router-depending-on-logged-in-status
 
 const routes: Routes = [
 
+  { path: '', redirectTo: 'home', pathMatch: 'full' },
+  { path: 'home',
+    component: TaskListsPageComponent,
+    resolve: {results: HomeRouterResolverService},
+    runGuardsAndResolvers: 'always'
+  },
   { path: 'user/login', component: LoginComponent},
-  { path: 'home', component: TaskListsPageComponent},
   { path: 'sign-up', component: SignUpComponent},
   { path: '**', pathMatch: 'full', redirectTo: 'home'}
 ];
@@ -67,7 +74,9 @@ export class XhrInterceptor implements HttpInterceptor {
     MatCardModule,
     MatGridListModule,
     FormsModule,
-    RouterModule.forRoot(routes),
+    RouterModule.forRoot(routes, {onSameUrlNavigation: 'reload'}),
+    /* onSameUrlNavigation: 'reload' - will rerun the resolve/gaurd attached to
+    to every refresh, this is not done by default. */
     NgbModule,
     ReactiveFormsModule
   ],

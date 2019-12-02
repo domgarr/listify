@@ -16,11 +16,13 @@ export class TaskListsPageComponent implements OnInit {
  }
 
  ngOnInit(){
+   console.log("Here");
  }
 
 ngAfterViewInit() {
     //Fetch jwt from localStorage.
     this.jwt = localStorage.getItem("id_token");
+    console.log("CHeck jwt" + this.jwt);
     //TODO: I really should verify this token is correct and not tampered with before moving pages.
     //If null, we direct the user to the login page.
     if(this.jwt == null){

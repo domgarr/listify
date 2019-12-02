@@ -23,6 +23,11 @@ export class LoginComponent {
   }
 
   ngOnInit(){
+    console.log("Login: ngOnInit");
+    if(localStorage.getItem("id_token") != null) {
+      this.router.navigateByUrl('/home');
+    }
+
     //Here is an example of reactive form validation
     this.loginForm = new FormGroup({
       email : new FormControl('',[Validators.required, Validators.minLength(3), Validators.maxLength(256), Validators.email]),
@@ -45,7 +50,7 @@ export class LoginComponent {
         //where it will be used to authenticate a user.
         localStorage.setItem("id_token", response.headers.get("Authorization"));
         //After a successful login to go the main page of the app
-        this.router.navigateByUrl('/task-lists-page', { skipLocationChange: true });
+        this.router.navigateByUrl('/home');
         break;
       default:
     }
@@ -69,7 +74,7 @@ get email() { return this.loginForm.get('email'); }
 get password() { return this.loginForm.get('password'); }
 
 onSignUpClick(){
-  this.router.navigateByUrl('/sign-up', { skipLocationChange: true });
+  this.router.navigateByUrl('/sign-up');
 }
 
 }

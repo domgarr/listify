@@ -1,4 +1,5 @@
 import { Component, OnInit,OnDestroy, Input, ElementRef, ChangeDetectorRef,HostListener, ViewChild, Output, EventEmitter} from '@angular/core';
+import { Router, Event, NavigationStart, NavigationEnd } from '@angular/router';
 
 import {Task} from '../models/task';
 import {TaskList} from '../models/task-list';
@@ -13,9 +14,9 @@ import {TaskListService} from '../task-list.service';
 export class TaskListComponent implements OnInit {
 
    editingTaskListName = false; //Controls if input element for editing TaskListName is rendered or not.
-
+   id : string;
    isDoneBatch : Task[]  = []; //Used for holding Task models which were clicked denoting is_done as true or complete.
-
+   subscription;
     @Input() taskList : TaskList; //The taskList is a @Input because the parent component feeds it a  taskList object
     /*
       Note the @ViewChild annotation. This is get a reference to the Input which is not rendered on OnInit
@@ -26,7 +27,8 @@ export class TaskListComponent implements OnInit {
 /*
   Upon instantiation Angular will use its DI system to set taskservice to a singleton instance of taskservice.
 */
-  constructor(private ref : ChangeDetectorRef, private taskService: TaskService, private taskListService: TaskListService) {
+  constructor(private ref : ChangeDetectorRef, private taskService: TaskService, private taskListService: TaskListService, private router : Router) {
+    console.log("Constructor: Task-List Component");
    }
 /*
   Upon refreshing or closing the browser make a request to update all tasks that were completed.
@@ -35,12 +37,45 @@ export class TaskListComponent implements OnInit {
 */
    @HostListener('window:beforeunload')
    persistIsDoneChanges(){
-     this.taskService.batchUpdateTaskDone(this.isDoneBatch).subscribe(resp => {} );
+     this.batchUpdateTaskIsDone()
    }
 
   ngOnInit() {
-    //Upon angular initiating
+    console.log("NgInit: Task-List Component");
+    this.id = localStorage.getItem("id_token");
     this.getTasks(this.taskList.listId);
+    console.log(this.router.events);
+    this.subscription = this.router.events.subscribe( (event )=>{
+      if(event instanceof NavigationEnd){
+        /*If we detect that the router is starting navigate as indicated by NavigationStart event
+        then call the batchUpdateTaskDone service. This fixes the issue with logging out not Updating
+        task completion. This is because the window does unload when we navigate with the router.*/
+        switch(event.url){
+          case "/home":
+            /* Every time the router navigates to this page we will fetch tasks again. This
+            solves an edge case where a user logs out of one account and logs into another
+            and their tasklists do not render for them. This is because previously we only called
+            the service upon component view initilization. What's happening is angular is reusing the
+            component and becuase it isn't creating a new one ngOnInit is being called again. */
+            console.log("/home")
+            this.batchUpdateTaskIsDone()
+            this.getTasks(this.taskList.listId);
+            break;
+          case "/user/login":
+          console.log("/user/login");
+
+            //When a user logs out it redirects to /user/login
+            this.batchUpdateTaskIsDone()
+            break;
+          default:
+          }
+      }
+    });
+  }
+
+  ngOnDestroy(){
+  //  this.router.events.unsubscribe();
+  this.subscription.unsubscribe();
   }
 
   /*
@@ -144,5 +179,14 @@ export class TaskListComponent implements OnInit {
   checkIfCompletedTaskIsInBatchArray(id){
     let existingTask = this.isDoneBatch.find(task => id === task.id);
     return existingTask;
+  }
+
+  /* If the isDoneBatch has atleast one element, send batch request to server
+  to update mutation on is_done field */
+  batchUpdateTaskIsDone(){
+    if(this.isDoneBatch.length > 0){
+
+      this.taskService.batchUpdateTaskDone(this.isDoneBatch, this.id).subscribe(resp => {this.isDoneBatch = [];} );
+    }
   }
 }

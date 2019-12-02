@@ -46,7 +46,7 @@ export class SignUpComponent implements OnInit {
   signUpHandler(){
     /* Upon creating a user successfully direct the user to the login page.
     NOTE: skipLocationChange is not hiding the URL */
-    this.router.navigateByUrl("user/login", { skipLocationChange: true });
+    this.router.navigateByUrl("user/login");
   }
 
   //TODO:
